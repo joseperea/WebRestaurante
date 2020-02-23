@@ -9,7 +9,7 @@ namespace WebRestaurante.ClasesUtil
 {
     public class Cliente
     {
-        public static int idCliente(string correo, string nombre, string apellido, string telefono, WebRestauranteContext db)
+        public static Guid idCliente(string correo, string nombre, string apellido, string telefono, WebRestauranteContext db)
         {
             var usuario = db.Clientes.Where(c => c.Correo_Cli == correo).FirstOrDefault();
             if (usuario == null)
@@ -27,7 +27,7 @@ namespace WebRestaurante.ClasesUtil
                 db.Clientes.Add(cliente);
                 db.SaveChanges();
             }
-            int idCliente = db.Clientes.Where(c => (c.Correo_Cli == correo)).Max(c => c.Cod_Cli).GetHashCode();
+            Guid idCliente = db.Clientes.Where(c => (c.Correo_Cli == correo)).FirstOrDefault().Cod_Cli;
             return idCliente;
         }
 

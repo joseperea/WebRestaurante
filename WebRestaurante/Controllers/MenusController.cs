@@ -17,7 +17,7 @@ namespace WebRestaurante.Controllers
     {
         private WebRestauranteContext db = new WebRestauranteContext();
 
-        public async Task<ActionResult> AñadirMenus(int? IdC , int? IdM, int? IdMesaO, string[] selectedMenu, string[] DCantida, string CPersona, string NCF, string add, int? TMenu)
+        public async Task<ActionResult> AñadirMenus(Guid? IdC , int? IdM, int? IdMesaO, string[] selectedMenu, string[] DCantida, string CPersona, string NCF, string add, int? TMenu)
         {
             var addr = new AddR
             {
@@ -89,7 +89,7 @@ namespace WebRestaurante.Controllers
             return View("MenuVista", MenuVista.ToPagedList((int)page, 1));
         }
 
-        public ActionResult BuscarTMenu(int id, int? page, string add, string CPersona, int? IdMesaO, int? IdC, int? IdM, string[] selectedMenu, string[] DCantida)
+        public ActionResult BuscarTMenu(int id, int? page, string add, string CPersona, int? IdMesaO, Guid? IdC, int? IdM, string[] selectedMenu, string[] DCantida)
         {
             page = (page ?? 1);
             ViewBag.idTmenu = id;

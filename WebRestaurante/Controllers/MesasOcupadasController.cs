@@ -18,7 +18,7 @@ namespace WebRestaurante.Controllers
         private WebRestauranteContext db = new WebRestauranteContext();
 
         // GET: MesasOcupada
-        public ActionResult ConReserva(int IdC, int IdM, int IdMesaO, string NCF, int CPersona, int? add)
+        public ActionResult ConReserva(Guid IdC, int IdM, int IdMesaO, string NCF, int CPersona, int? add)
         {
             var ListMenu = new List<Menu>();
             var Mesas = new List<Mesas>();
@@ -102,7 +102,7 @@ namespace WebRestaurante.Controllers
             ViewBag.Model = add;
             return View(DetalleViews);
         }
-        public int idDocumentos(int IdCliente, ReservaView ReservaView, string NReserva)
+        public int idDocumentos(Guid IdCliente, ReservaView ReservaView, string NReserva)
         {
             int hora = ReservaView.MesasOcupadas.HoraIngreso_MesasO.TimeOfDay.Hours;
             hora = hora + 2;
@@ -129,7 +129,7 @@ namespace WebRestaurante.Controllers
         }
 
         // GET: MesasOcupadas/Details/5
-        public ActionResult Details(int? id)
+        public ActionResult Details(Guid? id)
         {
             if (id == null)
             {
@@ -162,7 +162,7 @@ namespace WebRestaurante.Controllers
         public async Task<ActionResult> Create(ReservaView ReservaView, string RCM)
         {
             string idMesa = "";
-            int IdCliente = 0;
+            Guid IdCliente = new Guid();
             int codMesas = 0;
             int CMesas = db.Mesas.ToList().Count();
             var addr = new AddR();
@@ -375,7 +375,7 @@ namespace WebRestaurante.Controllers
         }
 
         // GET: MesasOcupadas/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(Guid? id)
         {
             if (id == null)
             {
@@ -408,7 +408,7 @@ namespace WebRestaurante.Controllers
         }
 
         // GET: MesasOcupadas/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(Guid? id)
         {
             if (id == null)
             {

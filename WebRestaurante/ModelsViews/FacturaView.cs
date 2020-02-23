@@ -17,7 +17,7 @@ namespace WebRestaurante.ModelsViews
     {
         public int Cod_Mesa { set; get; }
 
-        public int Cod_Cli { get; set; }
+        public Guid Cod_Cli { get; set; }
 
         public int Cod_MesasO { get; set; }
 

@@ -7,7 +7,7 @@ namespace WebRestaurante.ModelsViews
 {
     public class DetalleView
     {
-        public int IdReserva { get; set; }
+        public Guid IdReserva { get; set; }
 
         public List<Menu> Menus { get; set; }
 
@@ -69,7 +69,7 @@ namespace WebRestaurante.ModelsViews
     public class EDetalles
     {
         public int IdM { get; set; }
-        public int IdC { get; set; }
+        public Guid IdC { get; set; }
         public int IdMesaO { get; set; }
         public string NC { get; set; }
         public int D { get; set; }

@@ -9,7 +9,7 @@ namespace WebRestaurante.ClasesUtil
 {
     public class Reserva
     {
-        public static void DetalleMenuCliente(int IdCliente, string idMesas, string Nconfirma, WebRestauranteContext db, string[] MenuCantidad, int? IdMesaO, bool? TR)
+        public static void DetalleMenuCliente(Guid IdCliente, string idMesas, string Nconfirma, WebRestauranteContext db, string[] MenuCantidad, int? IdMesaO, bool? TR)
         {
             string[] idMesa = idMesas.Split(new char[] { ',' });
             foreach (var item in idMesa)

@@ -67,7 +67,7 @@ namespace WebRestaurante.ClasesUtil
             await sendMail(email, subject, body);
         }
 
-        public static async Task ConfirmarReserva(int idCliente, string NReserva, WebRestauranteContext db)
+        public static async Task ConfirmarReserva(Guid idCliente, string NReserva, WebRestauranteContext db)
         {
             int CDocumento = 0, CPersonas = 0, M = 0;
             var DMesasCliente = db.DetalleMesasCliente.Where(r => (r.Cod_Cli == idCliente && r.NConfirmacion_DMC == NReserva)).ToList();

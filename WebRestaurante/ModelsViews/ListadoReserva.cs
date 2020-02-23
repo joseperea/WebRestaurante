@@ -8,7 +8,7 @@ namespace WebRestaurante.ModelsViews
     {
         public string Nombre { get; set; }
 
-        public int IdCliente { get; set; }
+        public Guid IdCliente { get; set; }
 
         [Display(Name = "Cantidad de mesas")]
         public int Cmesas { get; set; }

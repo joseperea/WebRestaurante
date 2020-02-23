@@ -14,11 +14,11 @@ namespace WebRestaurante.Controllers
     {
         WebRestauranteContext db = new WebRestauranteContext();
 
-        public ActionResult Desactivar(int idD, int? page)
+        public ActionResult Desactivar(Guid idD, int? page)
         {
             page = (page ?? 1);
             var reservas = new List<ListadoReserva>();
-            int id = 0;
+            Guid id = new Guid();
             var mesaso = db.DetalleMesasCliente.Where(drm => drm.Cod_Cli == idD).ToList();
             foreach (var item in mesaso)
             {
@@ -37,7 +37,7 @@ namespace WebRestaurante.Controllers
             foreach (var item in Filtro)
             {
                 var idreserva = db.DetalleMesasCliente.Where(drm => drm.Cod_MesasO == item.Cod_MesasO).ToList();
-                int idd = idreserva.FirstOrDefault().Cod_Cli;
+                Guid idd = idreserva.FirstOrDefault().Cod_Cli;
                 var cliente = db.Clientes.Find(idd);
                 if (idreserva.FirstOrDefault().Cod_Cli != id)
                 {
@@ -61,7 +61,7 @@ namespace WebRestaurante.Controllers
             foreach (var item in Fmesasocupadas)
             {
                 var idreserva = db.DetalleMesasCliente.Where(drm => drm.Cod_MesasO == item.Cod_MesasO).ToList();
-                int idd = idreserva.FirstOrDefault().Cod_Cli;
+                Guid idd = idreserva.FirstOrDefault().Cod_Cli;
                 var cliente = db.Clientes.Find(idd);
                 if (idreserva.FirstOrDefault().Cod_Cli != id)
                 {
@@ -85,10 +85,10 @@ namespace WebRestaurante.Controllers
             var Reserva = reservas.OrderBy(r => r.Fecha).ToList();
             return View("ListadoReserva",Reserva.ToPagedList((int)page, 5));
         }
-        public ActionResult Detalle(int id)
+        public ActionResult Detalle(Guid id)
         {
             var detalle = new DetalleView();
-            int i = 0;
+            Guid i = new Guid();
             var idmesasO = db.DetalleMesasCliente.Where(drm => drm.Cod_Cli == id).ToList();
             foreach (var item in idmesasO)
             {
@@ -111,7 +111,7 @@ namespace WebRestaurante.Controllers
             detalle.Cliente = db.Clientes.Find(idmesasO.Max(r => r.Cod_Cli));
             return View(detalle);
         }
-        public ActionResult DetalleReserva(string Idr, int Idc)
+        public ActionResult DetalleReserva(string Idr, Guid Idc)
         {
             var DetalleReserva = new DetalleReserva();
             int CMesas = 0;
@@ -141,7 +141,7 @@ namespace WebRestaurante.Controllers
             page = (page ?? 1);
             ViewBag.CurrentFiltre = lista.Fecha;
             var reservas = new List<ListadoReserva>();
-            int id = 0;
+            Guid id = new Guid();
             DateTime horaI = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.TimeOfDay.Hours, DateTime.Now.TimeOfDay.Minutes, DateTime.Now.TimeOfDay.Seconds);
             DateTime horaS = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.TimeOfDay.Hours, DateTime.Now.TimeOfDay.Minutes, DateTime.Now.TimeOfDay.Seconds);
             if (lista.Fecha >= DateTime.Now.Date)
@@ -156,7 +156,7 @@ namespace WebRestaurante.Controllers
                 foreach (var item in Filtros)
                 {
                     var idreserva = db.DetalleMesasCliente.Where(drm => drm.Cod_MesasO == item.Cod_MesasO).ToList();
-                    int idr = idreserva.FirstOrDefault().Cod_Cli;
+                    Guid idr = idreserva.FirstOrDefault().Cod_Cli;
                     var cliente = db.Clientes.Find(idr);
                     if (idreserva.FirstOrDefault().Cod_Cli != id)
                     {
@@ -193,7 +193,7 @@ namespace WebRestaurante.Controllers
             foreach (var item in Filtro)
             {
                 var idreserva = db.DetalleMesasCliente.Where(drm => drm.Cod_MesasO == item.Cod_MesasO).ToList();
-                int idr = idreserva.FirstOrDefault().Cod_Cli;
+                Guid idr = idreserva.FirstOrDefault().Cod_Cli;
                 var cliente = db.Clientes.Find(idr);
                 if (idreserva.FirstOrDefault().Cod_Cli != id)
                 {
@@ -217,7 +217,7 @@ namespace WebRestaurante.Controllers
             foreach (var item in Fmesasocupadas)
             {
                 var idreserva = db.DetalleMesasCliente.Where(drm => drm.Cod_MesasO == item.Cod_MesasO).ToList();
-                int idr = idreserva.FirstOrDefault().Cod_Cli;
+                Guid idr = idreserva.FirstOrDefault().Cod_Cli;
                 var cliente = db.Clientes.Find(idr);
                 if (idreserva.FirstOrDefault().Cod_Cli != id)
                 {
@@ -246,7 +246,7 @@ namespace WebRestaurante.Controllers
         {
             page = (page ?? 1);
             var reservas = new List<ListadoReserva>();
-            int id = 0;
+            Guid id = new Guid();
             DateTime fecha = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day);
             DateTime horaI = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.TimeOfDay.Hours, DateTime.Now.TimeOfDay.Minutes, DateTime.Now.TimeOfDay.Seconds);
             DateTime horaS = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.TimeOfDay.Hours, DateTime.Now.TimeOfDay.Minutes, DateTime.Now.TimeOfDay.Seconds);
@@ -261,7 +261,7 @@ namespace WebRestaurante.Controllers
             foreach (var item in Filtro)
             {
                 var idreserva = db.DetalleMesasCliente.Where(drm => drm.Cod_MesasO == item.Cod_MesasO).ToList();
-                int idr = idreserva.FirstOrDefault().Cod_Cli;
+                Guid idr = idreserva.FirstOrDefault().Cod_Cli;
                 var cliente = db.Clientes.Find(idr);
                 if (idreserva.FirstOrDefault().Cod_Cli != id)
                 {
@@ -285,7 +285,7 @@ namespace WebRestaurante.Controllers
             foreach (var item in Fmesasocupadas)
             {
                 var idreserva = db.DetalleMesasCliente.Where(drm => drm.Cod_MesasO == item.Cod_MesasO).ToList();
-                int idr = idreserva.FirstOrDefault().Cod_Cli;
+                Guid idr = idreserva.FirstOrDefault().Cod_Cli;
                 var cliente = db.Clientes.Find(idr);
                 if (idreserva.FirstOrDefault().Cod_Cli != id)
                 {

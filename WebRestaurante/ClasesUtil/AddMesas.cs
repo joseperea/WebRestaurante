@@ -8,7 +8,7 @@ namespace WebRestaurante.ClasesUtil
 {
     public class AddMesas
     {
-        public static List<MesasOcupadas> Lista(int IdC, int IdM, WebRestauranteContext db, DateTime fecha, DateTime hora)
+        public static List<MesasOcupadas> Lista(Guid IdC, int IdM, WebRestauranteContext db, DateTime fecha, DateTime hora)
         {
             var lista = new List<MesasOcupadas>();   
             foreach (var item in db.Mesas.ToList())

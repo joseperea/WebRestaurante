@@ -8,7 +8,7 @@ namespace WebRestaurante.ClasesUtil
 {
     public class AddMenus 
     {
-        public static bool ingresar(WebRestauranteContext db, int IdM, int IdC, string[] selectedMenu, string[] DCantida, int? IdMesaO, string CPersona, bool? TR)
+        public static bool ingresar(WebRestauranteContext db, int IdM, Guid IdC, string[] selectedMenu, string[] DCantida, int? IdMesaO, string CPersona, bool? TR)
         {
             int horaS = DateTime.Now.TimeOfDay.Hours;
             horaS = horaS + 2;

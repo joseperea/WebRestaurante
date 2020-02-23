@@ -114,7 +114,7 @@ namespace WebRestaurante.Controllers
             //return View();
         }
 
-        public ActionResult Detalles(int? IdM, int? IdC, int? IdMesaO, string NC, int? D, bool? F, string Add) 
+        public ActionResult Detalles(int? IdM, Guid? IdC, int? IdMesaO, string NC, int? D, bool? F, string Add) 
         {
             var Cliente = new Clientes(); var edetalle = new EDetalles();
             var DCM = new List<DetalleMesasCliente>();       
@@ -334,7 +334,7 @@ namespace WebRestaurante.Controllers
         }
 
 
-        public ActionResult AnadirMenu(int? IdM, int? IdC, int? IdMesaO, int? add)
+        public ActionResult AnadirMenu(int? IdM, Guid IdC, int? IdMesaO, int? add)
         {
             var listMenu = new List<MenuList>();
             var addMenus = new AddMenu();
@@ -374,7 +374,7 @@ namespace WebRestaurante.Controllers
                     }
                     addMenus.Menus = db.Menus.Where(t => t.Estado_Menu == true).OrderBy(t => t.Cod_TMenu).ToList();
                     addMenus.TipoMenus = db.TipoMenus.Where(t => t.Estado_TMenu == true).ToList();
-                    addMenus.IdCliente = Convert.ToInt32(IdC);
+                    addMenus.IdCliente = IdC;
                     addMenus.Mesa = db.Mesas.Find(IdM);
                     addMenus.IdMenu = Convert.ToInt32(IdM);
                     addMenus.IdMesasO = Convert.ToInt32(IdMesaO);
@@ -387,7 +387,7 @@ namespace WebRestaurante.Controllers
                 addMenus.Menus = db.Menus.OrderBy(t => t.Cod_TMenu).ToList();
                 ModelState.AddModelError(string.Empty, ex.Message);
                 addMenus.TipoMenus = db.TipoMenus.ToList();
-                addMenus.IdCliente = Convert.ToInt32(IdC);
+                addMenus.IdCliente = IdC;
                 addMenus.Mesa = db.Mesas.Find(IdM);
                 addMenus.IdMenu = Convert.ToInt32(IdM);
                 addMenus.checkbox = listMenu;
@@ -398,7 +398,7 @@ namespace WebRestaurante.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult AnadirMenu(AddMenu AddMenu, int IdM, int IdC, string[] selectedMenu, string[] DCantida, int? IdMesaO, string CPersona)
+        public ActionResult AnadirMenu(AddMenu AddMenu, int IdM, Guid IdC, string[] selectedMenu, string[] DCantida, int? IdMesaO, string CPersona)
         {
             var listMenu = new List<MenuList>();
             var addMenus = new AddMenu();
@@ -410,7 +410,7 @@ namespace WebRestaurante.Controllers
                     {
                         addMenus.Menus = db.Menus.OrderBy(t => t.Cod_TMenu).ToList();                        
                         addMenus.TipoMenus = db.TipoMenus.ToList();
-                        addMenus.IdCliente = Convert.ToInt32(IdC);
+                        addMenus.IdCliente = IdC;
                         addMenus.Mesa = db.Mesas.Find(IdM);
                         addMenus.IdMenu = Convert.ToInt32(IdM);
                         addMenus.checkbox = listMenu;
@@ -422,7 +422,7 @@ namespace WebRestaurante.Controllers
                     {
                         addMenus.Menus = db.Menus.OrderBy(t => t.Cod_TMenu).ToList();
                         addMenus.TipoMenus = db.TipoMenus.ToList();
-                        addMenus.IdCliente = Convert.ToInt32(IdC);
+                        addMenus.IdCliente = IdC;
                         addMenus.Mesa = db.Mesas.Find(IdM);
                         addMenus.IdMenu = Convert.ToInt32(IdM);
                         addMenus.IdMesasO = IdMesaO.Value;
@@ -440,7 +440,7 @@ namespace WebRestaurante.Controllers
                 {
                     addMenus.Menus = db.Menus.OrderBy(t => t.Cod_TMenu).ToList();                
                     addMenus.TipoMenus = db.TipoMenus.ToList();
-                    addMenus.IdCliente = Convert.ToInt32(IdC);
+                    addMenus.IdCliente = IdC;
                     addMenus.Mesa = db.Mesas.Find(IdM);
                     addMenus.IdMenu = Convert.ToInt32(IdM);
                     addMenus.checkbox = listMenu;

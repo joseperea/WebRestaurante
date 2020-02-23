@@ -12,7 +12,7 @@ namespace WebRestaurante.Models
         [Key]
         public int Id_Doc { get; set; }
 
-        public int Cod_Cli { get; set; }
+        public Guid Cod_Cli { get; set; }
 
         public int Cod_TDoc { get; set; }
 

@@ -13,7 +13,7 @@ namespace WebRestaurante.ModelsViews
         public List<MenuList> checkbox { get; set; }
         public List<TipoMenu> TipoMenus { get; set; }
         public Mesas Mesa { get; set; }
-        public int IdCliente { get; set; }
+        public Guid IdCliente { get; set; }
         public int IdMenu { get; set; }
         [Display(Name ="Cantidad Persona")]
         public int CPersona { get; set; }
@@ -31,7 +31,7 @@ namespace WebRestaurante.ModelsViews
     public class AddR
     {
         public int IdM { get; set; }
-        public int IdC { get; set; }
+        public Guid IdC { get; set; }
         public int IdMesaO { get; set; }
         public string CPersona { get; set; }
         public string add { get; set; }

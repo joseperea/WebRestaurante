@@ -8,7 +8,7 @@ namespace WebRestaurante.Models
     public class Clientes
     {
         [Key]
-        public int Cod_Cli { set; get; }
+        public Guid Cod_Cli { set; get; }
 
         [Display(Name = "Nombres")]
         [Required(ErrorMessage = "Ingrese Nombres")]
