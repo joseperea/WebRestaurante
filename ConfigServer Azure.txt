@@ -1,0 +1,5 @@
+servidor: pruebaproyectos.database.windows.net
+
+inicio de sesion: pruebaproy
+
+contraseña: Prueba123456
