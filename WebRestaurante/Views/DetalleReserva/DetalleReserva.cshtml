@@ -1,0 +1,59 @@
+﻿@model WebRestaurante.ModelsViews.DetalleReserva
+
+@{
+    ViewBag.Title = "DetalleReserva";
+}
+<div class="container">
+    <h1 class="text-info"><strong>CONFIRMACION DE RESERVA</strong></h1><br />
+    <h3 class="text-warning">Señor(a) <strong>@Html.DisplayFor(model => model.Cliente.Nombres_Cli) @Html.DisplayFor(model => model.Cliente.Apellidos_Cli),</strong> 
+     ha confirmado correctamente la reserva.</h3>
+    <div>
+        <hr />
+        <h3 class="text-warning">Detalles</h3>
+        <dl class="dl-horizontal">
+
+            <dt class="text-warning" >
+                Cantidad de Mesas:
+            </dt>
+
+            <dd style="color:#ffffff">
+                @ViewBag.CMesas
+            </dd>
+
+            <dt class="text-warning">
+                Cantidad de Personas:
+            </dt>
+
+            <dd style="color:#ffffff">
+                @Html.DisplayFor(model => model.MesasOcupada.CPersonas_Mesas)
+            </dd>
+
+            <dt class="text-warning">
+                Fecha:
+            </dt>
+
+            <dd style="color:#ffffff">
+                @Html.DisplayFor(model => model.MesasOcupada.Fecha_MesasO.Date)
+            </dd>
+
+            <dt class="text-warning">
+                Hora de Ingreso
+            </dt>
+
+            <dd style="color:#ffffff">
+                @Html.DisplayFor(model => model.MesasOcupada.HoraIngreso_MesasO.TimeOfDay)
+            </dd>
+
+            <dt class="text-warning">
+                Tiempo de espera
+            </dt>
+
+            <dd style="color:#ffffff">
+                @Html.DisplayFor(model => model.MesasOcupada.HoraSalida_MesasO.TimeOfDay)
+            </dd>
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Confirmar Reserva", "Index", "Home", new { }, new { @class = "btn btn-success" }) |
+    </p>
+</div>

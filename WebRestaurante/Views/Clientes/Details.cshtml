@@ -1,0 +1,90 @@
+﻿@model WebRestaurante.Models.Clientes
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Clientes</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Municipio.Nombre_Muni)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Municipio.Nombre_Muni)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TipoDocumento.Nombre_TDoc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TipoDocumento.Nombre_TDoc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Identificacion_Cli)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Identificacion_Cli)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Nombres_Cli)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nombres_Cli)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Apellidos_Cli)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Apellidos_Cli)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Correo_Cli)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Correo_Cli)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Telefono_Cli)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Telefono_Cli)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Direccion_Cli)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Direccion_Cli)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Fecha_Cli)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Fecha_Cli)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Editar", "Edit", new { id = Model.Cod_Cli }, new {@class="btn btn-primary"}) 
+    @Html.ActionLink("Volver", "Index", new { }, new { @class = "btn btn-warning" })
+</p>

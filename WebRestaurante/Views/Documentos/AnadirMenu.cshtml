@@ -1,0 +1,285 @@
+﻿@model WebRestaurante.ModelsViews.AddMenu
+@{
+    ViewBag.Title = "Anadir Menú";
+}
+    <div class="container-fluid">
+        <br />
+        <div class="row">
+            <div title="@ViewBag.Title" class="col-sm-12 initialism bs-docs-header text-center " style="font-size:30px; max-width: 100%;height: auto; background-image:url(../../Imagenes/f3df92c17f5c1cc3209e60bc3831f3df.jpg); border-radius:4px;border:2px solid #808080;color:white">
+                Añadir menú ala mesa
+                <span class="badge text-left" style="font-size:30px; background:blue">M @Html.DisplayFor(t => t.IdMenu)</span></p>
+            </div>
+        </div>
+
+        @using (Html.BeginForm("AnadirMenu", "Documentos", new { IdC = Model.IdCliente, IdM = Model.IdMenu, IdMesaO = Model.IdMesasO }, FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            if (ViewBag.Error != null)
+            {
+                <div class="alert alert-danger alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <strong>Atencion!</strong> @ViewBag.Error
+                </div>
+            }
+            <div class="form-group text-right" style="margin-top:10px">
+                <label for="Cantidad Personas" class="text-danger">
+                    <select id="TMenu" name="CPersona" class="form-control">
+                        @if (Model.CPersona == 0)
+                        {
+                            for (int i = 0; i <= 4; i++)
+                            {
+                                if (i != 0)
+                                {
+                                    <option>@i</option>
+                                }
+                                else
+                                {
+                                    <option>CANTIDAD DE PERSONAS....</option>
+                                }
+                            }
+                        }
+                        else
+                        {
+                            for (int i = 1; i <= Model.CPersona; i++)
+                            {
+                                int x = 0;
+                                if (i == Model.CPersona)
+                                {
+                                    <option selected="selected">@i</option>
+                                }
+                                else if (i == 1)
+                                {
+                                    <option>Seleccione cantidad....</option>
+                                }
+                                else
+                                {
+                                    x = i - 1;
+                                    <option>@x</option>
+                                }
+
+                            }
+                        }
+                    </select>
+                </label>
+            </div>
+            <div class="row">
+                @{ int TMenu = 0;}
+                @foreach (var item in Model.TipoMenus.ToList())
+                {
+                    <div class="col-md-3">
+                        <div class="panel-group" id="accordion">
+                            @if (Model.checkbox.Where(t => t.TMenu == item.Cod_TMenu).Count() != 0)
+                            {
+                                <div class="panel" style="background-color:#e06767">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a class="btn btn-primary" style="width:100%" data-toggle="collapse" href="#@Html.DisplayFor(t => item.Nombre_TMenu)">
+                                                <strong style="color:#000000">
+                                                    @Html.DisplayFor(t => item.Nombre_TMenu)
+                                                </strong>
+                                            </a>
+                                        </h4>
+                                    </div>
+                                    <div id="@Html.DisplayFor(t => item.Nombre_TMenu)" class="panel-collapse collapse">
+                                        @foreach (var item2 in Model.Menus.Where(t => t.Cod_TMenu == item.Cod_TMenu).ToList())
+                                        {
+                                            if (Model.checkbox.Where(t => t.IdMenus == item2.Cod_Menu).Count() != 0)
+                                            {
+                                                <table class="table">
+                                                    <tr>
+                                                        <th>
+                                                            <span class="checkbox">
+                                                                <label for="@item2.Nombre_Menu" class="text-danger checkbox-inline">
+                                                                    <input type="checkbox" class="checkbox" name="selectedMenu" value="@item2.Cod_Menu,@TMenu" id="@TMenu" checked="checked" />
+                                                                    @item2.Nombre_Menu
+                                                                    <select id="@TMenu" name="DCantida">
+                                                                        @for (int i = 1; i <= 4; i++)
+                                                                        {
+                                                                            if (i == Model.checkbox.Where(t => t.IdMenus == item2.Cod_Menu).FirstOrDefault().cantidad)
+                                                                            {
+                                                                                <option selected="selected">@i</option>
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <option>@i</option>
+                                                                            }
+
+                                                                        }
+                                                                    </select>
+                                                                    <input type="hidden" name="DCantida" value="@TMenu" />
+                                                                </label>
+                                                            </span>
+                                                        </th>
+                                                        <th>
+                                                            <img width="60" height="50" src="@Url.Action("ConvertirImagen","Menus", new {id = item2.Cod_Menu})" class="img-rounded" alt="imagen Responsive" />
+                                                        </th>
+                                                    </tr>
+                                                </table>
+                                            }
+                                            else
+                                            {
+                                                <table class="table">
+                                                    <tr>
+                                                        <th>
+                                                            <span class="checkbox">
+                                                                <label for="@item2.Nombre_Menu" class="text-danger">
+                                                                    <input type="checkbox" class="checkbox" name="selectedMenu" value="@item2.Cod_Menu,@TMenu" id="@TMenu" />
+                                                                    @item2.Nombre_Menu
+                                                                    @*<input type="text" class="navbar-text" name="DCantida" value="@Model.cantidad" />*@
+                                                                    <select id="@TMenu" name="DCantida">
+                                                                        <option>1</option>
+                                                                        <option>2</option>
+                                                                        <option>3</option>
+                                                                        <option>4</option>
+                                                                    </select>
+                                                                    <input type="hidden" name="DCantida" value="@TMenu" />
+                                                                </label>
+                                                            </span>
+                                                        </th>
+                                                        <th>
+                                                            <img width="60" height="50" src="@Url.Action("ConvertirImagen","Menus", new {id = item2.Cod_Menu})" class="img-rounded" alt="imagen Responsive" />
+                                                        </th>
+                                                    </tr>
+                                                </table>
+                                            }
+
+                                            TMenu++;
+                                        }
+                                        <div class="panel-footer">Fin @Html.DisplayFor(t => item.Nombre_TMenu)</div>
+                                    </div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <button class="btn btn-primary" style="width:100%" data-toggle="collapse" href="#@Html.DisplayFor(t => item.Nombre_TMenu)">
+                                                <strong style="color:#000000">
+                                                    @Html.DisplayFor(t => item.Nombre_TMenu)
+                                                </strong>
+                                            </button>
+                                        </h4>
+                                    </div>
+                                    <div id="@Html.DisplayFor(t => item.Nombre_TMenu)" class="panel-collapse collapse">
+                                        @foreach (var item2 in Model.Menus.Where(t => t.Cod_TMenu == item.Cod_TMenu).ToList())
+                                        {
+                                            if (Model.checkbox.Where(t => t.IdMenus == item2.Cod_Menu).Count() != 0)
+                                            {
+                                                <table class="table">
+                                                    <tr>
+                                                        <th>
+                                                            <span class="checkbox">
+                                                                <label for="@item2.Nombre_Menu" class="text-danger checkbox-inline">
+                                                                    <input type="checkbox" class="checkbox" name="selectedMenu" value="@item2.Cod_Menu,@TMenu" id="@TMenu" checked="checked" />
+                                                                    @item2.Nombre_Menu
+                                                                    <select id="@TMenu" name="DCantida">
+                                                                        @for (int i = 1; i <= 4; i++)
+                                                                        {
+                                                                            if (i == Model.checkbox.Where(t => t.IdMenus == item2.Cod_Menu).FirstOrDefault().cantidad)
+                                                                            {
+                                                                                <option selected="selected">@i</option>
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <option>@i</option>
+                                                                            }
+
+                                                                        }
+                                                                    </select>
+                                                                    <input type="hidden" name="DCantida" value="@TMenu" />
+                                                                </label>
+                                                            </span>
+                                                        </th>
+                                                        <th>
+                                                            <img width="60" height="50" src="@Url.Action("ConvertirImagen","Menus", new {id = item2.Cod_Menu})" class="img-rounded" alt="imagen Responsive" />
+                                                        </th>
+                                                    </tr>
+                                                </table>
+                                            }
+                                            else
+                                            {
+                                                <table class="table">
+                                                    <tr>
+                                                        <th>
+                                                            <span class="checkbox">
+                                                                <label for="@item2.Nombre_Menu" class="text-danger">
+                                                                    <input type="checkbox" class="checkbox" name="selectedMenu" value="@item2.Cod_Menu,@TMenu" id="@TMenu" />
+                                                                    @item2.Nombre_Menu
+                                                                    @*<input type="text" class="navbar-text" name="DCantida" value="@Model.cantidad" />*@
+                                                                    <select id="@TMenu" name="DCantida">
+                                                                        <option>1</option>
+                                                                        <option>2</option>
+                                                                        <option>3</option>
+                                                                        <option>4</option>
+                                                                    </select>
+                                                                    <input type="hidden" name="DCantida" value="@TMenu" />
+                                                                </label>
+                                                            </span>
+                                                        </th>
+                                                        <th>
+                                                            <img width="60" height="50" src="@Url.Action("ConvertirImagen","Menus", new {id = item2.Cod_Menu})" class="img-rounded" alt="imagen Responsive" />
+                                                        </th>
+                                                    </tr>
+                                                </table>
+                                            }
+
+                                            TMenu++;
+                                        }
+                                        <div class="panel-footer">Fin @Html.DisplayFor(t => item.Nombre_TMenu)</div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    @Html.ActionLink("Volver", "Facturacion", "Documentos", new { }, new { @class = "btn btn-warning", style = "position: fixed; bottom: 10px; left: 1%;" })
+                    <input type="submit" class="btn btn-success" value="Añadir menú" onclick="JavascriptFunction()" name="searchQuery" style="position: fixed; bottom: 10px; right: 1%;" />
+                    @*<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-sm">Small modal</button>*@
+
+                    <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+                        <div class="modal-dialog modal-sm" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title">Modal title</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <p>One fine body&hellip;</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-primary">Save changes</button>
+                                    <input type="submit" class="btn btn-success" value="Siguente" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+        <div id="divLoading" style="margin: 0px; padding: 0px; position: fixed; right: 0px;
+         top: 0px; width: 100%; height: 100%; background-color: #666666; z-index: 30001;
+         opacity: .8; filter: alpha(opacity=70);display:none">
+            <p style="position: absolute; top: 30%; left: 35%; color: White;">
+                Cargando, Por favor Espere.... <img src="~/Imagenes/loading_transp.gif">
+            </p>
+        </div>
+    </div>
+
+
+<script type="text/javascript" language="javascript">
+function JavascriptFunction() {
+    var url = '@Url.Action("AnadirMenu", "Documentos")';
+    $("#divLoading").show();
+    $.post(url, null,
+            function (data) {
+                $("#PID")[0].innerHTML = data;
+                $("#divLoading").hide();
+            });
+}
+</script>

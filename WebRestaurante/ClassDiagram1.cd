@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="WebRestaurante.Controllers.DetalleReservaController">
+    <Position X="0.5" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAQAAAAQAAAAAAAAEAAAAAAAAAAAAAAAAAQAAAA=</HashCode>
+      <FileName>Controllers\DetalleReservaController.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WebRestaurante.Models.Class1">
+    <Position X="5.25" Y="1" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Dias.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WebRestaurante.Models.MesasOcupadas">
+    <Position X="3.25" Y="0.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAEAABAAQAEAAQAAEAAAgAAAAAAAgAQAAAAAAEAAE=</HashCode>
+      <FileName>Models\MesasOcupadas.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -1,0 +1,63 @@
+﻿@using PagedList.Mvc;
+@model PagedList.IPagedList<WebRestaurante.Models.Clientes>
+
+@{
+    ViewBag.Title = "Index";
+}
+<div class="container">
+    <br />
+    <h2>Index</h2>
+    <br />
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Nombres_Cli)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Apellidos_Cli)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Correo_Cli)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.FirstOrDefault().Telefono_Cli)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nombres_Cli)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Apellidos_Cli)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Correo_Cli)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Telefono_Cli)
+                </td>
+                <td>
+                    @Html.ActionLink("Detailles", "Details", new { id = item.Cod_Cli }, new { @class= "btn btn-info"}) 
+                    @if (User.IsInRole("Administrador"))
+                    {
+                        @Html.ActionLink("Borrar", "Delete", new { id = item.Cod_Cli }, new { @class = "btn btn-danger" })
+                    }                    
+                </td>
+            </tr>
+        }
+
+    </table>
+    <div>
+        Pagina: @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber), de @Model.PageCount
+        @Html.PagedListPager(Model, page => Url.Action("index", new
+{
+    page,
+    sortOrde = ViewBag.CurrentSort,
+    currentFiltre = ViewBag.CurrentFiltre
+}))
+    </div>
+</div>

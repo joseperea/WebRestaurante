@@ -1,0 +1,250 @@
+﻿@model WebRestaurante.ModelsViews.FacturaView
+<link href="~/Content/Imagenes2.css" rel="stylesheet" />
+@{
+    ViewBag.Title = "Facturacion";
+}
+<div class="container-fluid">
+    <br /><br />
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="row" style="margin:1em">
+                @using (Html.BeginForm("Facturacion", "Documentos", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                    @Html.AntiForgeryToken()
+                    @*<div class="col-sm-12">
+                        <blockquote class="col-md-12 blockquote" style="color:#000000; background-image:url(../../Imagenes/f3df92c17f5c1cc3209e60bc3831f3df.jpg); border-radius:4px;border:2px solid #ffffff">
+                            <p title="HyperText Markup Language" class="initialism col-md-11 text-center text-primary" style="font-size:30px; max-width: 100%;height: auto;">
+                                LISTA DE MESAS                                                               
+                            </p>
+                        </blockquote>    
+                    </div>*@
+                    <div class="col-md-4">
+                        @if (ViewBag.Error != null)
+                        {
+                            <div class="alert alert-danger alert-dismissible" role="alert">
+                                <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                                <span class="sr-only">Error:</span>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <strong>Atencion!</strong> @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            </div>
+                        }
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            @Html.DropDownList("Cod_Tbuscar", null, htmlAttributes: new { @class = "form-control", style = "width:100%" })
+                            @Html.ValidationMessageFor(model => model.Buscar.Tbuscar, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="form-group">
+                            @Html.Editor("CBuscar", new { htmlAttributes = new { @class = "form-control", placeholder = "BUSCAR", style = "width:100%" } })
+                            @Html.ValidationMessageFor(model => model.Buscar.buscar, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <button type="submit" class="btn btn-success text-left" value="Buscar" style="width:100%;height:35px">
+                            <span class="form-group glyphicon glyphicon-search" data-toggle="tooltip" title="BUSCAR"></span>
+                            BUSCAR
+                        </button>
+                    </div>
+                }
+            </div>
+        </div>
+        @if (ViewBag.busqueda == true)
+        {
+            <div class="col-sm-12">
+                <div class="panel panel-warning">
+                    <div class="panel-heading">RESULTADO....</div>
+                    <div class="panel-body">
+                        @foreach (var item in Model.factura.ToList())
+                {
+                    if (item.Busquedad == true)
+                    {
+                                <div class="col-sm-12 col-md-3">
+                                    <div class="thumbnail" style="background-color:cornflowerblue; border:2px solid #0520f8">
+                                        <div id="bljaIMGte">
+                                            <img width="240" height="150" src="~/Imagenes/S_162011-MLM20463755912_102015-O.jpg" class="img-rounded" alt="imagen Responsive" style="max-width: 100%;height: auto; border:2px solid blue"/>
+                                            <div class="bljaIMGtex">
+                                                <span>@Html.DisplayFor(m => item.Numero_Mesa)</span>
+                                            </div>
+                                        </div>
+                                        <div class="caption row">
+                                            <div class="col-sm-12" style="margin:5px">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        @Html.ActionLink("Añadir Menu", "AnadirMenu", "Documentos", new { IdM = item.Cod_Mesa, IdC = item.Cod_Cli, IdMesaO = item.Cod_MesasO }, new { @class = "btn btn-warning", data_toggle = "tooltip", title = "Añadir Menu", data_placement = "left" })
+                                                    </div>
+                                                    <div class="col-md-6 text-right">
+                                                        <strong><samp>@Html.DisplayFor(m => item.CMenu)</samp></strong>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12" style="margin:5px">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        @Html.ActionLink("Detalles", "Detalles", "Documentos", new { IdM = item.Cod_Mesa, IdC = item.Cod_Cli, IdMesaO = item.Cod_MesasO, NC = item.NConfirmacion, D = 1 }, new { @class = "btn btn-info" })
+                                                    </div>
+                                                    <div class="col-md-6 text-right">
+                                                        <strong>@Html.DisplayFor(m => item.TipoFactura)</strong>  
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12" style="margin:5px">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        @Html.ActionLink("Facturar", "Detalles", "Documentos", new { IdM = item.Cod_Mesa, IdC = item.Cod_Cli, IdMesaO = item.Cod_MesasO, NC = item.NConfirmacion, D = 0 }, new { @class = "btn btn-success" })
+                                                    </div>
+                                                    <div class="col-md-6 text-right">
+                                                        <strong><samp>@Html.DisplayFor(m => item.ValorTotal)</samp></strong>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12" style="margin:5px">
+                                                <span>
+                                                    @if (item.Llegada == true)
+                                                    {
+                                                        @Html.ActionLink("  ESTADO", "Facturacion", "Documentos", new { }, new { @class = "btn btn-primary glyphicon glyphicon-cutlery", style = "height:35px; width:100%;" })
+                                                    }
+                                                    else
+                                                    {
+                                                        @Html.ActionLink("  ESTADO", "Facturacion", "Documentos", new { E = true, NF = item.NConfirmacion, IdM = item.Cod_MesasO }, new { @class = "btn btn-danger glyphicon glyphicon-remove", style = "height:35px; width:100%;" })
+                                                    }
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        }
+        <div class="col-sm-12">
+            @foreach (var item in Model.factura.ToList())
+            {
+                <div class="col-sm-12 col-md-3">
+                    @if (item.Ocupada == true)
+                {
+                        <div class="thumbnail" style="background-color:cornflowerblue" >
+                            <div id="bljaIMGte">
+                                <img width="240" height="150" src="~/Imagenes/S_162011-MLM20463755912_102015-O.jpg" class="img-rounded" alt="imagen Responsive" style="max-width: 100%;height: auto;"/>
+                                <div class="bljaIMGtex">
+                                    <span>@Html.DisplayFor(m => item.Numero_Mesa)</span>
+                                </div>
+                            </div>
+                            <div class="caption row">
+                                <div style="height:350px">
+                                    <div class="col-sm-12" style="margin:5px">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                @Html.ActionLink("Añadir Menu", "AnadirMenu", "Documentos", new { IdM = item.Cod_Mesa, IdC = item.Cod_Cli, IdMesaO = item.Cod_MesasO }, new { @class = "btn btn-warning", data_toggle = "tooltip", title = "Añadir Menu", data_placement = "left" })
+                                            </div>
+                                            <div class="col-md-6 text-right">
+                                                <strong><samp>@Html.DisplayFor(m => item.CMenu)</samp></strong>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12" style="margin:5px">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                @Html.ActionLink("Detalles", "Detalles", "Documentos", new { IdM = item.Cod_Mesa, IdC = item.Cod_Cli, IdMesaO = item.Cod_MesasO, NC = item.NConfirmacion, D = 1 }, new { @class = "btn btn-info" })
+                                            </div>
+                                            <div class="col-md-6 text-right">
+                                                <strong>@Html.DisplayFor(m => item.TipoFactura)</strong>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12" style="margin:5px">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                @Html.ActionLink("Facturar", "Detalles", "Documentos", new { IdM = item.Cod_Mesa, IdC = item.Cod_Cli, IdMesaO = item.Cod_MesasO, NC = item.NConfirmacion, D = 0 }, new { @class = "btn btn-success" })
+                                            </div>
+                                            <div class="col-md-6 text-right">
+                                                <strong><samp>@Html.DisplayFor(m => item.ValorTotal)</samp></strong>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12" style="margin:5px">
+                                        <span>
+                                            @if (item.Llegada == true)
+                                            {
+                                                @Html.ActionLink("  ESTADO", "Facturacion", "Documentos", new { }, new { @class = "btn btn-primary glyphicon glyphicon-cutlery", style = "height:35px; width:100%;" })
+                                            }
+                                            else
+                                            {
+                                                @Html.ActionLink("  ESTADO", "Facturacion", "Documentos", new { E = true, NF = item.NConfirmacion, IdM = item.Cod_MesasO }, new { @class = "btn btn-danger glyphicon glyphicon-remove", style = "height:35px; width:100%;" })
+                                            }
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="thumbnail">
+                            <div id="bljaIMGte">
+                                <img width="240" height="150" src="~/Imagenes/S_162011-MLM20463755912_102015-O.jpg" class="img-rounded" alt="imagen Responsive" style="max-width: 100%;height: auto;" />
+                                <div class="bljaIMGtex">
+                                    <span>@Html.DisplayFor(m => item.Numero_Mesa)</span>
+                                </div>
+                            </div>
+                            <div class="caption">
+                                <div style="height:350px">
+                                    <table class="table table-hover">
+                                        <tr>
+                                            <th>@Html.ActionLink("Añadir Menu", "AnadirMenu", "Documentos", new { IdM = item.Cod_Mesa, IdC = 1 }, new { @class = "btn btn-warning" })</th>
+                                            <th class="text-right"><strong class="text-right"><samp>@Html.DisplayFor(m => item.CMenu)</samp></strong></th>
+                                        </tr>
+                                        <tr>
+                                            <th>@Html.ActionLink("Reservar", "Create", "MesasOcupadas", new { }, new { @class = "btn btn-success" })</th>
+                                            <th class="text-right"><strong class="text-right"><samp>@Html.DisplayFor(m => item.ValorTotal)</samp></strong></th>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+    @* -------------------------------------------------------------------------------------------------------------------- *@
+    <div class="row">
+
+    </div>
+    @*<button type="button" class="btn btn-info" data-toggle="modal" data-target=".bs-example-modal-sm">Detalles</button>*@
+    <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Modal title</h4>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        One fine body&hellip;
+
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <a>@Html.ActionLink("AñadirMenu", "AnadirMenu", "Documentos", new { }, new { @class = "btn btn-warning" })</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" language="javascript">
+    function JavascriptFunction() {
+        var url = '@Url.Action("Detalles", "Documentos")';
+        $("#divLoading").show();
+        $.post(url, null,
+                function (data) {
+                    $("#PID")[0].innerHTML = data;
+                    $("#divLoading").hide();
+                });
+    }
+</script>

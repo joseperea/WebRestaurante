@@ -1,0 +1,33 @@
+﻿@model WebRestaurante.Models.Mesas
+
+@{
+    ViewBag.Title = "Detalles de la Mesa";
+}
+<div class="container">
+    <br />
+    <h2><b>Detalles de la Mesa</b></h2>
+    <div>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt class="text-warning">
+                @Html.DisplayNameFor(model => model.Estados.Nombre_Est)
+            </dt>
+
+            <dd style="color:#ffffff">
+                @Html.DisplayFor(model => model.Estados.Nombre_Est)
+            </dd>
+            <dt class="text-warning">
+                @Html.DisplayNameFor(model => model.Numero_Mesa)
+            </dt>
+
+            <dd style="color:#ffffff">
+                @Html.DisplayFor(model => model.Numero_Mesa)
+            </dd>
+
+        </dl>
+    </div>
+    <p>
+        @Html.ActionLink("Editar", "Edit", new { id = Model.Cod_Mesa }, new { @class = "btn btn-primary" })
+        @Html.ActionLink("Volver", "Index", new { }, new { @class = "btn btn-warning" })
+    </p>
+</div>

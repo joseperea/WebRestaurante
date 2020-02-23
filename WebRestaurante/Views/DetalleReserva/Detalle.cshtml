@@ -1,0 +1,84 @@
+﻿@model WebRestaurante.ModelsViews.DetalleView
+@{
+    ViewBag.Title = "Detalle";
+}
+<div class="container">
+    <br />
+    <h2 class="text-info"><strong>Detalle de reserva</strong></h2>
+    <div class="row">
+        <hr />
+        <div class="col-md-6">
+            <h3 class="text-primary"><strong>Detalle del comensal</strong></h3>
+            <dl class="dl-horizontal">
+                <dt class="text-warning">
+                    @Html.DisplayNameFor(model => model.Cliente.Nombres_Cli)
+                </dt>                
+                <dd style="color:#ffffff">
+                    @Html.DisplayFor(model => model.Cliente.Nombres_Cli)
+                </dd>
+                <dt class="text-warning">
+                    @Html.DisplayNameFor(model => model.Cliente.Apellidos_Cli)
+                </dt>
+                <dd style="color:#ffffff">
+                    @Html.DisplayFor(model => model.Cliente.Apellidos_Cli)
+                </dd>
+                <dt class="text-warning">
+                    @Html.DisplayNameFor(model => model.Cliente.Correo_Cli)
+                </dt>
+                <dd style="color:#ffffff">
+                    @Html.DisplayFor(model => model.Cliente.Correo_Cli)
+                </dd>
+                <dt class="text-warning">
+                    @Html.DisplayNameFor(model => model.Cliente.Telefono_Cli)
+                </dt>
+                <dd style="color:#ffffff">
+                    @Html.DisplayFor(model => model.Cliente.Telefono_Cli)
+                </dd>
+            </dl>
+        </div>
+        <div class="col-md-6">
+            <h3 class="text-primary"><strong>Detalle de lo reservado</strong></h3>
+            <dl class="dl-horizontal">
+                <dt class="text-warning">
+                    @Html.DisplayNameFor(model => model.Cmesas)
+                </dt>
+                <dd style="color:#ffffff">
+                    @Html.DisplayFor(model => model.Cmesas)
+                </dd>
+                <dt class="text-warning">
+                    @Html.DisplayNameFor(model => model.Cpersonas)
+                </dt>
+                <dd style="color:#ffffff">
+                    @Html.DisplayFor(model => model.Cpersonas)
+                </dd>
+                <dt class="text-warning">
+                    @Html.DisplayNameFor(model => model.Fecha)
+                </dt>
+                <dd style="color:#ffffff">
+                    @Html.DisplayFor(model => model.Fecha)
+                </dd>
+                <dt class="text-warning">
+                    @Html.DisplayNameFor(model => model.HoraI)
+                </dt>
+                <dd style="color:#ffffff">
+                    @Html.DisplayFor(model => model.HoraI)
+                </dd>
+                <dt class="text-warning">
+                    @Html.DisplayNameFor(model => model.Horas)
+                </dt>
+                <dd style="color:#ffffff">
+                    @Html.DisplayFor(model => model.Horas)
+                </dd>
+                <dt class="text-warning">
+                    @Html.DisplayNameFor(model => model.Confirmacion)
+                </dt>
+                <dd style="color:#ffffff">
+                    @Html.DisplayFor(model => model.Confirmacion)
+                </dd>
+            </dl>
+        </div>
+    </div>
+</div>
+<p>
+    @Html.ActionLink("Volver", "ListadoReserva", "DetalleReserva", new { }, new { @class = "btn btn-warning" }) |
+</p>

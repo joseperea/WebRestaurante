@@ -1,0 +1,66 @@
+﻿@model WebRestaurante.Models.MesasOcupadas
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>MesasOcupadas</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Estados.Nombre_Est)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Estados.Nombre_Est)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Mesas.Numero_Mesa)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Mesas.Numero_Mesa)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Fecha_MesasO)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Fecha_MesasO)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HoraIngreso_MesasO)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HoraIngreso_MesasO)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HoraSalida_MesasO)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HoraSalida_MesasO)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CPersonas_Mesas)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CPersonas_Mesas)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Cod_MesasO }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

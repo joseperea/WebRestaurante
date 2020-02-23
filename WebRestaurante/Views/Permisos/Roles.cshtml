@@ -1,0 +1,40 @@
+﻿@model WebRestaurante.ModelsViews.UserView
+
+@{
+    ViewBag.Title = "Roles";
+}
+<div class="container">
+    <br />
+    <h2 class="text-info">ROLES DE USUARIO: <span class="label label-default">@Model.UserName</span></h2>
+    <h3 class="text-danger">@ViewBag.Error</h3>
+    <p>
+        @Html.ActionLink("Añadir Roles", "AddRoles", new { UserId = Model.UserId }, new { @class = "btn btn-success" })
+    </p>
+    <table class="table">
+        <tr>
+            <th class="text-warning">
+                @Html.DisplayNameFor(model => model.RoleName)
+            </th>
+            <th></th>
+        </tr>
+
+        @for (int i = 0; i < Model.Roles.Count; i++)
+        {
+            <tr>
+                <td style="color:#ffffff">
+                    @Html.DisplayFor(modelItem => Model.Roles[i].RoleName)
+                </td>
+                <td>
+                    @Html.ActionLink("Eliminar", "EliminarRol", new { UserId = Model.UserId, Rolid = Model.Roles[i].RoleId }, new { @class = "btn btn-danger" })
+                </td>
+            </tr>
+        }
+
+    </table>
+    <p>
+        @*<span class="glyphicon glyphicon-arrow-left"></span>*@
+        @Html.ActionLink("volver", "Index", new { }, new { @class = "btn btn-warning" })
+    </p>
+</div>
+
+

@@ -1,0 +1,75 @@
+﻿@model WebRestaurante.ModelsViews.RegistroView
+
+@{
+    ViewBag.Title = "Create";
+}
+<div class="container"></div>
+<br />
+<h1><b>Registrarse</b></h1>
+ <div class="row">
+     <hr />
+    @using (Html.BeginForm())
+    {  
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="col-md-6">
+            <div class="form-horizontal">
+                <div class="form-group">
+                    @Html.LabelFor(m => m.User.Email, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.TextBoxFor(m => m.User.Email, new { @class = "form-control", placeholder = "Correo Electronico" })
+                        @Html.ValidationMessageFor(model => model.User.Email, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.User.Password, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.PasswordFor(m => m.User.Password, new { @class = "form-control", placeholder = "Contraseña" })
+                        @Html.ValidationMessageFor(model => model.User.Password, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.User.ConfirmPassword, new { @class = "col-md-2 control-label" })
+                    <div class="col-md-10">
+                        @Html.PasswordFor(m => m.User.ConfirmPassword, new { @class = "form-control", placeholder = "Confirmar Contraseña" })
+                        @Html.ValidationMessageFor(model => model.User.ConfirmPassword, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-horizontal">
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Clientes.Nombres_Cli, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Clientes.Nombres_Cli, new { htmlAttributes = new { @class = "form-control", placeholder = "Nombre" } })
+                        @Html.ValidationMessageFor(model => model.Clientes.Nombres_Cli, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Clientes.Apellidos_Cli, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Clientes.Apellidos_Cli, new { htmlAttributes = new { @class = "form-control", placeholder = "Apellido" } })
+                        @Html.ValidationMessageFor(model => model.Clientes.Apellidos_Cli, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Clientes.Telefono_Cli, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.Clientes.Telefono_Cli, new { htmlAttributes = new { @class = "form-control", placeholder = "Telefono" } })
+                        @Html.ValidationMessageFor(model => model.Clientes.Telefono_Cli, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+     <div class="form-group">
+         <div class="col-md-offset-2 col-md-10">
+             @Html.ActionLink("Volver", "Login", "Account", new { }, new { @class = "btn btn-warning" })
+             <input type="submit" value="Create" class="btn btn-success" />
+         </div>
+     </div>
+        </div>

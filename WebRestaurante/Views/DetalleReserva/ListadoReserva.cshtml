@@ -1,0 +1,94 @@
+﻿@using PagedList.Mvc;
+@model PagedList.IPagedList<WebRestaurante.ModelsViews.ListadoReserva>
+
+@{
+        ViewBag.Title = string.Format("Lista de Reserva ({0})", Model.Count());
+}
+<div class="container">
+    <h2 class="text-info"><strong>Lista de Reserva</strong></h2>
+    <br />
+    @using (Html.BeginForm())
+    {
+    <table>
+        <tr>
+            <td style="color:#ffffff">
+                @Html.LabelFor(model => model.FirstOrDefault().Fecha, htmlAttributes: new { @class = "control-label col-md-2" })
+            </td>            
+            <td>
+                @Html.EditorFor(model => model.FirstOrDefault().Fecha, new { htmlAttributes = new { @class = "form-control" } })               
+            </td>
+            <td>
+                <input type="submit" value="Buscar" class="btn btn-success" />
+            </td>
+            <td class="text-danger">
+                    @ViewBag.Error
+                    @Html.ValidationMessageFor(model => model.FirstOrDefault().Fecha, "", new { @class = "text-danger" })                
+            </td>
+        </tr>
+    </table>
+    }
+    <br />
+    <div class="pre-scrollable">
+        <table class="table">
+            <tr>
+                <th class="text-warning">
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().Nombre)
+                </th>
+                <th class="text-warning text-center">
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().Fecha)
+                </th>
+                <th class="text-warning text-right">
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().HoraI)
+                </th>
+                <th class="text-warning text-right">
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().Cmesas)
+                </th>
+                <th class="text-warning text-right">
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().Cpersonas)
+                </th>
+                <th class="text-warning text-center">
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().Confirmacion)
+                </th>
+                <th></th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td style="color:#ffffff">
+                        @Html.DisplayFor(modelItem => item.Nombre)
+                    </td>
+                    <td style="color:#ffffff">
+                        @Html.DisplayFor(modelItem => item.Fecha)
+                    </td>
+                    <td style="color:#ffffff" class="text-right">
+                        @Html.DisplayFor(modelItem => item.HoraI)
+                    </td>
+                    <td style="color:#ffffff" class="text-right">
+                        @Html.DisplayFor(modelItem => item.Cmesas)
+                    </td>
+                    <td style="color:#ffffff" class="text-right">
+                        @Html.DisplayFor(modelItem => item.Cpersonas)
+                    </td>
+                    <td style="color:#ffffff" class="text-center">
+                        @Html.DisplayFor(modelItem => item.Confirmacion)
+                    </td>
+                    <td>
+                        @Html.ActionLink("Desactivar", "Desactivar", new { idR = item.IdCliente }, new { @class = "btn btn-danger", onclick = "return confirm('Esta seguro de desactivar esta reserva')" })
+                        @Html.ActionLink("Detalles", "Detalle", new { id = item.IdCliente }, new { @class = "btn btn-info" })
+                    </td>
+                </tr>
+            }
+
+        </table>
+    </div>
+    <div>
+        Pagina: @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber), de @Model.PageCount
+        @Html.PagedListPager(Model, page => Url.Action("ListadoReserva", new
+   {
+       page,
+       sortOrde = ViewBag.CurrentSort,
+       currentFiltre = ViewBag.CurrentFiltre
+   }))
+    </div>
+</div>

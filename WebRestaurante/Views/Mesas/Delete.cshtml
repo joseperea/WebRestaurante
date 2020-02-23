@@ -1,0 +1,39 @@
+﻿@model WebRestaurante.Models.Mesas
+
+@{
+    ViewBag.Title = "Desactivar Mesa";
+}
+<div class="container">
+    <br />
+    <h2 class="text-info"><b>Desactivar Mesa</b></h2>
+    <div>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt class="text-warning">
+                @Html.DisplayNameFor(model => model.Estados.Nombre_Est)
+            </dt>
+
+            <dd style="color: #ffffff">
+                @Html.DisplayFor(model => model.Estados.Nombre_Est)
+            </dd>
+            <dt class="text-warning">
+                @Html.DisplayNameFor(model => model.Numero_Mesa)
+            </dt>
+
+            <dd style="color: #ffffff">
+                @Html.DisplayFor(model => model.Numero_Mesa)
+            </dd>
+
+        </dl>
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-actions no-color">
+                @Html.ActionLink("Volver", "Index", new { }, new { @class = "btn btn-warning" })
+                <input type="submit" value="Desactivar" class="btn btn-success"  onclick = "return confirm('Esta seguro de desactivar esta reserva')"/> |
+            </div>
+        }
+    </div>
+</div>

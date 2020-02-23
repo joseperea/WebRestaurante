@@ -1,0 +1,31 @@
+﻿@model WebRestaurante.ModelsViews.UserView
+
+@{
+    ViewBag.Title = "Añadir Roles";
+}
+<div class="container">
+    <br />
+    <h2 class="text-info">Añadir Roles al Usuario: <span class="label label-default">@Model.UserName</span></h2>
+    <h3 class="text-danger">@ViewBag.Error</h3><br />
+    @using (Html.BeginForm("AddRoles", "Permisos", new { UserId = Model.UserId }, FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-horizontal">
+            <div class="form-group" style="color:#ffffff"> 
+                @Html.LabelFor(model => model.Rol.RoleId, "Roles", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownList("RolesId", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Rol.RoleId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Añadir Rol" class="btn btn-success" />
+                    @Html.ActionLink("Volver", "Roles", new { id = Model.UserId }, new { @class = "btn btn-warning" })
+                </div>
+            </div>
+        </div>
+    }
+</div>
+

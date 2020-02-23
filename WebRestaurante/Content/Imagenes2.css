@@ -1,0 +1,24 @@
+﻿#bljaIMGte{
+    float:left;
+    position:relative;
+}
+#bljaIMGte .bljaIMGtex {
+    width:40%;
+    position:absolute;
+    top:80%;
+    left:30%;
+    color:#000000;
+    border-radius: 30px 30px 30px 30px;
+    font:normal normal 150% quicksand;
+    background: #ffffff;
+    border: 2px solid #000000;
+    text-align: center;
+}
+
+#intro {
+    margin-top: 66px;
+    padding: 44px;
+    background: #467612 url("intro_background.png") repeat-x;
+    background-size: 100%;
+    border-radius: 22px;
+}

@@ -1,0 +1,229 @@
+﻿@model WebRestaurante.ModelsViews.DetalleView
+@{
+    ViewBag.Title = "Confirmación de Reserva";
+}
+<div class="container-fluid" style="color:white">
+    <br /><br />
+    <div class="row">
+        <div class="col-sm-12">
+            <blockquote class="col-md-12 blockquote" style="color:#000000; background-image:url(../../Imagenes/f3df92c17f5c1cc3209e60bc3831f3df.jpg); border-radius:4px; border:2px solid white">
+                <p title="CONFIRMACIÓN DE RESERVA" class="initialism col-md-11 text-center text-primary" style="font-size:30px; max-width: 100%;height: auto;">CONFIRMACIÓN DE RESERVA</p>
+            </blockquote>
+        </div>
+        <hr />
+        <div class="col-sm-12" style="top:20px">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <p style="font-size:25px; max-width: 100%;height: auto;" class="text-justify text-primary">
+                        Señor(a) <strong class="text-uppercase">@Html.DisplayFor(t => t.Cliente.Nombres_Cli) @Html.DisplayFor(t => t.Cliente.Apellidos_Cli)</strong>,te enviamos un correo electrónico con la informacion de la reserva que acabas de realizar. Haz clic en el enlace incluido en el correo electrónico para confirmar la reserva y que eres el propietario de esa dirección.
+                    </p> <br />
+                    <p style="font-size:25px; max-width: 100%;height: auto;" class="text-justify text-primary">
+                        Asegúrese de revisar su bandeja de correo no deseado en caso de no encontrar el correo en su bandeja de entrada..
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12 text-center" style="top:20px">
+            <p><button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-sm" style="width:20%;height:20%">Detalles de reserva</button></p>
+        </div>
+        @if (ViewBag.Model != null)
+        {
+            <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+                <div class="modal-dialog modal-sm" role="document" style="width:auto">
+                    <div class="modal-content">
+                        <div class="modal-header" style="background-image:url(../../Imagenes/textura-fondo-azul-1573.jpg)">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" style="color:#ffffff;font-size:16px">DETALLER DE RESERVA</h4>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="row" style="font-size:20px">
+                                        <div class="col-md-12 text-center" style="background-image:url(../../Imagenes/f3df92c17f5c1cc3209e60bc3831f3df.jpg);border-radius:4px;border:2px solid blue">
+                                            @Html.DisplayNameFor(model => model.Cmesas)
+                                        </div>
+                                        <div class="col-md-12 text-primary text-center" style="text-transform:uppercase">
+                                            @Html.DisplayFor(t => Model.Cmesas)
+                                        </div>
+                                        <div class="col-md-12 text-center" style="background-image:url(../../Imagenes/f3df92c17f5c1cc3209e60bc3831f3df.jpg);border-radius:4px;border:2px solid blue">
+                                            @Html.DisplayNameFor(model => model.Nmesas)
+                                        </div>
+                                        <div class="col-md-12 text-primary text-center" style="text-transform:uppercase">
+                                            @Html.DisplayFor(t => Model.Nmesas)
+                                        </div>
+                                        <div class="col-md-12 text-center" style="background-image:url(../../Imagenes/f3df92c17f5c1cc3209e60bc3831f3df.jpg);border-radius:4px;border:2px solid blue">
+                                            @Html.DisplayNameFor(model => model.Cpersonas)
+                                        </div>
+                                        <div class="col-md-12 text-primary text-center" style="text-transform:uppercase">
+                                            @Html.DisplayFor(t => Model.Cpersonas)
+                                        </div>
+                                        <div class="col-md-12 text-center" style="background-image:url(../../Imagenes/f3df92c17f5c1cc3209e60bc3831f3df.jpg);border-radius:4px;border:2px solid blue">
+                                            @Html.DisplayNameFor(model => model.addMesasO.FirstOrDefault().Fecha_MesasO)
+                                        </div>
+                                        <div class="col-md-12 text-primary text-center" style="text-transform:uppercase">
+                                            @Html.DisplayFor(t => Model.addMesasO.FirstOrDefault().Fecha_MesasO)
+                                        </div>
+                                        <div class="col-md-12 text-center" style="background-image:url(../../Imagenes/f3df92c17f5c1cc3209e60bc3831f3df.jpg);border-radius:4px;border:2px solid blue">
+                                            @Html.DisplayNameFor(model => model.addMesasO.FirstOrDefault().HoraIngreso_MesasO)
+                                        </div>
+                                        <div class="col-md-12 text-primary text-center" style="text-transform:uppercase">
+                                            @Html.DisplayFor(t => Model.addMesasO.FirstOrDefault().HoraIngreso_MesasO)
+                                        </div>
+                                        <div class="col-md-12 text-center" style="background-image:url(../../Imagenes/f3df92c17f5c1cc3209e60bc3831f3df.jpg);border-radius:4px;border:2px solid blue">
+                                            @Html.DisplayNameFor(model => model.addMesasO.FirstOrDefault().HoraSalida_MesasO)
+                                        </div>
+                                        <div class="col-md-12 text-primary text-center" style="text-transform:uppercase">
+                                            @Html.DisplayFor(t => Model.addMesasO.FirstOrDefault().HoraSalida_MesasO, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="pre-scrollable" style="font-size:16px">
+                                        <table class="table table-hover">
+                                            @{
+                                                string aux1 = "";
+                                            }
+                                            <tr style="background-color:#760a0a">
+                                                <th>@Html.DisplayNameFor(Model => Model.Menus.FirstOrDefault().TipoMenu.Nombre_TMenu)</th>
+                                                <th>@Html.DisplayNameFor(Model => Model.Menus.FirstOrDefault().Nombre_Menu)</th>
+                                                <th>Imagen</th>
+                                                <th>@Html.DisplayName("Cantidad")</th>
+                                                <th>@Html.DisplayNameFor(Model => Model.Menus.FirstOrDefault().Valor_Menu)</th>
+                                                <th>@Html.DisplayName("SubTotal")</th>
+                                            </tr>
+                                            @foreach (var item in Model.Menus)
+                                            {
+                                                int i3 = 0;
+                                                string[] s = aux1.Split(new char[] { ',' });
+                                                foreach (var it in s)
+                                                {
+                                                    if (it != "")
+                                                    {
+                                                        if (Convert.ToInt32(it) == item.Cod_Menu)
+                                                        {
+                                                            i3++;
+                                                        }
+                                                    }
+                                                }
+                                                if (i3 == 0)
+                                                {
+                                                    var cantidad = Model.DetalleMesasClientes.Where(t => t.Cod_Menu == item.Cod_Menu).ToList();
+                                                    if (cantidad.Count() > 1)
+                                                    {
+                                                        int can = 0;
+                                                        decimal v = 0;
+                                                        if (cantidad.FirstOrDefault().Cantidad_DMC != 0)
+                                                        {
+                                                            foreach (var iten in cantidad)
+                                                            {
+                                                                Model.SubTotal = item.Valor_Menu * iten.Cantidad_DMC;
+                                                                can = can + iten.Cantidad_DMC;
+                                                            }
+                                                            v = item.Valor_Menu * Convert.ToDecimal(can);
+                                                            <tr style="color:#d2691e">
+                                                                <td>@Html.DisplayFor(t => item.TipoMenu.Nombre_TMenu)</td>
+                                                                <td>@Html.DisplayFor(t => item.Nombre_Menu)</td>
+                                                                <td><img width="60" height="50" src="@Url.Action("ConvertirImagen", "Menus", new { id = item.Cod_Menu })" /></td>
+                                                                <td>@Html.DisplayFor(t => can)</td>
+                                                                <td><samp>@Html.DisplayFor(t => item.Valor_Menu)</samp></td>
+                                                                <td><samp>@Html.DisplayFor(t => v)</samp></td>
+                                                            </tr>
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+                                                        Model.SubTotal = item.Valor_Menu * cantidad.FirstOrDefault().Cantidad_DMC;
+                                                        <tr style="color:#d2691e">
+                                                            <td>@Html.DisplayFor(t => item.TipoMenu.Nombre_TMenu)</td>
+                                                            <td>@Html.DisplayFor(t => item.Nombre_Menu)</td>
+                                                            <td><img width="60" height="50" src="@Url.Action("ConvertirImagen", "Menus", new { id = item.Cod_Menu })" /></td>
+                                                            <td>@Html.DisplayFor(t => cantidad.FirstOrDefault().Cantidad_DMC)</td>
+                                                            <td><samp>@Html.DisplayFor(t => item.Valor_Menu)</samp></td>
+                                                            <td><samp>@Html.DisplayFor(t => Model.SubTotal)</samp></td>
+                                                        </tr>
+
+                                                    }
+                                                    aux1 = aux1 + "," + item.Cod_Menu;
+                                                }
+                                            }
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer" style="background-image:url(../../Imagenes/textura-fondo-azul-1573.jpg)">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <p class="text-left"><button type="button" class="btn btn-warning" data-dismiss="modal">Volver</button></p>
+                                </div>
+                                <div class="col-sm-6">
+                                    <p class="text-right" style="color:#ffffff; font-size:25px; max-width: 100%;height: auto;"> VALOR TOTAL   <samp class="text-right">@Html.DisplayFor(t => Model.ValorTotal)</samp></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+                                                        <div class="modal-dialog modal-sm" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header" style="background-image:url(../../Imagenes/textura-fondo-azul-1573.jpg)">
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                                    <h4 class="modal-title" style="color:#ffffff">DETALLER DE RESERVA</h4>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <div class="row" style="font-size:16px">
+                                                                        <div class="col-md-12 text-center" style="background-image:url(../../Imagenes/f3df92c17f5c1cc3209e60bc3831f3df.jpg);border-radius:4px;border:2px solid blue">
+                                                                            @Html.DisplayNameFor(model => model.Cmesas)
+                                                                        </div>
+                                                                        <div class="col-md-12 text-primary text-center" style="text-transform:uppercase">
+                                                                            @Html.DisplayFor(t => Model.Cmesas)
+                                                                        </div>
+                                                                        <div class="col-md-12 text-center" style="background-image:url(../../Imagenes/f3df92c17f5c1cc3209e60bc3831f3df.jpg);border-radius:4px;border:2px solid blue">
+                                                                            @Html.DisplayNameFor(model => model.Nmesas)
+                                                                        </div>
+                                                                        <div class="col-md-12 text-primary text-center" style="text-transform:uppercase">
+                                                                            @Html.DisplayFor(t => Model.Nmesas)
+                                                                        </div>
+                                                                        <div class="col-md-12 text-center" style="background-image:url(../../Imagenes/f3df92c17f5c1cc3209e60bc3831f3df.jpg);border-radius:4px;border:2px solid blue">
+                                                                            @Html.DisplayNameFor(model => model.Cpersonas)
+                                                                        </div>
+                                                                        <div class="col-md-12 text-primary text-center" style="text-transform:uppercase">
+                                                                            @Html.DisplayFor(t => Model.Cpersonas)
+                                                                        </div>
+                                                                        <div class="col-md-12 text-center" style="background-image:url(../../Imagenes/f3df92c17f5c1cc3209e60bc3831f3df.jpg);border-radius:4px;border:2px solid blue">
+                                                                            @Html.DisplayNameFor(model => model.addMesasO.FirstOrDefault().Fecha_MesasO)
+                                                                        </div>
+                                                                        <div class="col-md-12 text-primary text-center" style="text-transform:uppercase">
+                                                                            @Html.DisplayFor(t => Model.addMesasO.FirstOrDefault().Fecha_MesasO)
+                                                                        </div>
+                                                                        <div class="col-md-12 text-center" style="background-image:url(../../Imagenes/f3df92c17f5c1cc3209e60bc3831f3df.jpg);border-radius:4px;border:2px solid blue">
+                                                                            @Html.DisplayNameFor(model => model.addMesasO.FirstOrDefault().HoraIngreso_MesasO)
+                                                                        </div>
+                                                                        <div class="col-md-12 text-primary text-center" style="text-transform:uppercase">
+                                                                            @Html.DisplayFor(t => Model.addMesasO.FirstOrDefault().HoraIngreso_MesasO)
+                                                                        </div>
+                                                                        <div class="col-md-12 text-center" style="background-image:url(../../Imagenes/f3df92c17f5c1cc3209e60bc3831f3df.jpg);border-radius:4px;border:2px solid blue">
+                                                                            @Html.DisplayNameFor(model => model.addMesasO.FirstOrDefault().HoraSalida_MesasO)
+                                                                        </div>
+                                                                        <div class="col-md-12 text-primary text-center" style="text-transform:uppercase">
+                                                                            @Html.DisplayFor(t => Model.addMesasO.FirstOrDefault().HoraSalida_MesasO, new { @class = "form-control" })
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="modal-footer" style="background-image:url(../../Imagenes/textura-fondo-azul-1573.jpg)">
+                                                                    <div class="row">
+                                                                        <div class="col-sm-6">
+                                                                            <p class="text-left"><button type="button" class="btn btn-warning" data-dismiss="modal">Volver</button></p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                                                        }
+    </div> 
+</div>

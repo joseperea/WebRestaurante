@@ -1,0 +1,457 @@
+﻿@model WebRestaurante.ModelsViews.DetalleView
+@{
+    ViewBag.Title = "Detalles Facturar";
+}
+<div class="container-fluid">   
+    @{ 
+        string aux = "";
+        foreach (var item in Model.DetalleMesasClientes.ToList())
+        {
+            aux = aux + "," + item.Id_DMC;
+        }
+    }
+    <br />
+    <div class="row">
+        <div title="@ViewBag.Title" class="col-sm-12 initialism bs-docs-header text-center " style="font-size:30px; max-width: 100%;height: auto; background-image:url(../../Imagenes/f3df92c17f5c1cc3209e60bc3831f3df.jpg); border-radius:4px;border:2px solid #808080; color:white">
+            <p title="HyperText Markup Language" class="initialism col-md-11 text-left text-primary" style="font-size:30px"> DETALLES</p>
+            @if (Model.F != false)
+            {
+                int c = 0;
+                c = Model.consecutivo - 1; 
+                <pre class="col-md-1 text-right" style="border:solid blue">@Html.DisplayName(Model.TipoDocumento.Nombre_TDoc) - @c</pre>
+            }
+            else
+            {
+                <pre class="col-md-1 text-right" style="border:solid blue">@Html.DisplayName(Model.TipoDocumento.Nombre_TDoc) - @Html.DisplayFor(t => t.consecutivo)</pre>
+            }            
+        </div>
+        <div class="col-md-12" style="color:#ffffff;margin-top:10px">
+            <div class="row">
+                <div class="col-md-4">
+                    @if (Model.Cliente.Cod_Cli != 1)
+                    {
+                        <div class="row">
+                            <div class="col-md-9">
+                                <pre style="color:#000000">@Html.DisplayName(Model.Cliente.Nombres_Cli + " " + Model.Cliente.Apellidos_Cli)</pre>
+                            </div>
+                            <div class="col-md-3">
+                                <pre style="color:#000000" class="text-center">Web</pre>
+                            </div>
+                        </div>
+
+                    }
+                    else
+                    {
+                        <div class="row">
+                            <div>
+                                <div class="col-md-9">
+                                    <pre style="color:#000000"> Restaurante</pre>
+                                </div>
+                                <div class="col-md-3">
+                                    <pre style="color:#000000" class="text-center">R</pre>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                    <div class="form-horizontal">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Cmesas, new { @class = "col-md-6 control-label" })
+                            <div class="col-md-6">
+                                @Html.DisplayFor(t => Model.Cmesas)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Nmesas, new { @class = "col-md-6 control-label" })
+                            <div class="col-md-6">
+                                @Html.DisplayFor(t => Model.Nmesas)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Cpersonas, new { @class = "col-md-6 control-label" })
+                            <div class="col-md-6">
+                                @Html.DisplayFor(t => Model.Cpersonas)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Fecha, new { @class = "col-md-6 control-label" })
+                            <div class="col-md-6">
+                                @Html.DisplayFor(t => Model.Fecha)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.HoraI, new { @class = "col-md-6 control-label" })
+                            <div class="col-md-6">
+                                @Html.DisplayFor(t => Model.HoraI)
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Horas, new { @class = "col-md-6 control-label" })
+                            <div class="col-md-6">
+                                @Html.DisplayFor(t => Model.Horas, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        @using (Html.BeginForm("Detalles", "Documentos", new { id = aux }, FormMethod.Post))
+                        {
+                            @Html.AntiForgeryToken()
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-10">
+                                    @Html.ActionLink("Volver", "Facturacion", "Documentos", new { }, new { @class = "btn btn-warning" })
+                                    @if (Model.Detalle == 1)
+                                    {
+                                        <input type="submit" class="btn btn-success" value="Generar Factura" disabled />
+                                    }
+                                    else if(Model.F != true)
+                                    {
+                                        <button type="button" class="btn btn-success" data-toggle="modal" data-target=".bs-example-modal-sm">Facturar</button>
+
+                                        <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+                                            <div class="modal-dialog modal-sm" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header" style="background-image:url(../../Imagenes/textura-fondo-azul-1573.jpg)">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                        <h4 class="modal-title">Total</h4>
+                                                    </div>
+                                                    <div class="modal-body text-primary">
+                                                        <div class="row">
+                                                            <div class="col-md-6" style="margin:5px">
+                                                                Valor Total
+                                                            </div>
+                                                            <div class="col-md-6" style="margin:5px">
+                                                                <input id="Total" value="@Html.DisplayFor(t => Model.ValorTotal)" disabled style="width:100%" />
+                                                            </div>
+                                                            <div class="col-md-12" style="margin:5px">
+                                                                <select id="mySelect" style="width:100%">
+                                                                    <option>MEDIO DE PAGO</option>
+                                                                    <option>EFECTIVO</option>
+                                                                    <option>TARJETAS</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="col-md-6" style="margin:5px">
+                                                                <input type="text" id="B" name="B" onkeyup="sumar()" style="width:100%" />
+                                                            </div>
+                                                            <div class="col-md-6" style="margin:5px">
+                                                                <input type="button" value="calcular" id="calcular" style="width:100%" />
+                                                            </div>
+                                                            <div class="col-md-6" style="margin:5px">
+                                                                Cambio
+                                                            </div>
+                                                            <div class="col-md-6" style="margin:5px">
+                                                                <label disabled id="C" style="width:100%">0</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer" style="background-image:url(../../Imagenes/textura-fondo-azul-1573.jpg)">
+                                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+                                                        @if (Model.F != true)
+                                                        {
+                                                            <input type="submit" id="post" class="btn btn-success" value="Generar Factura" onclick="JavascriptFunction()" />
+                                                        }                                                  
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <input type="button" id="post" class="btn btn-info" value="Imprimir Factura" onclick="PrintDiv()" />
+                                    }
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+                <div class="col-md-8">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-3 text-center">
+                                    <pre class="text-left" style="color:#000000">Añadir Mesa </pre>
+                                </div>
+                                <div class="col-md-9">
+                                    @if (Model.addMesasO.Count != 0)
+                                    {
+                                        if (Model.F != true)
+                                        {
+                                            <span class="text-left btn-group" role="group">
+                                                @if (Model.EDetalles.Add != null)
+                                                {
+                                                    string[] s = Model.EDetalles.Add.Split(new char[] { ',' });
+                                                    int i2 = 0;
+
+                                                    foreach (var item in Model.addMesasO)
+                                                    {
+                                                        for (int i1 = 0; i1 < s.Length; i1++)
+                                                        {
+                                                            if (s[i1] != "")
+                                                            {
+                                                                if (Convert.ToInt32(s[i1]) == item.Cod_MesasO)
+                                                                {
+                                                                    @Html.ActionLink(" M-" + item.Cod_Mesa, "Detalles", "Documentos", new { IdM = Model.EDetalles.IdM, IdC = Model.EDetalles.IdC, IdMesaO = Model.EDetalles.IdMesaO, NC = Model.EDetalles.NC, D = Model.EDetalles.D, Add = "-" + item.Cod_MesasO + "," + Model.EDetalles.Add }, new { @class = "btn btn-warning glyphicon glyphicon-minus-sign" })
+                                                                    i2++;
+                                                                    i1 = s.Length;
+                                                                }
+                                                                else
+                                                                {
+                                                                    i2 = 0;
+                                                                }
+                                                            }
+                                                        }
+                                                        if (i2 == 0)
+                                                        {
+                                                            @Html.ActionLink(" M-" + item.Cod_Mesa, "Detalles", "Documentos", new { IdM = Model.EDetalles.IdM, IdC = Model.EDetalles.IdC, IdMesaO = Model.EDetalles.IdMesaO, NC = Model.EDetalles.NC, D = Model.EDetalles.D, Add = item.Cod_MesasO + "," + Model.EDetalles.Add }, new { @class = "btn btn-info glyphicon glyphicon-plus-sign" })
+                                                        }
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    foreach (var item in Model.addMesasO)
+                                                    {
+                                                        @Html.ActionLink(" M-" + item.Cod_Mesa, "Detalles", "Documentos", new { IdM = Model.EDetalles.IdM, IdC = Model.EDetalles.IdC, IdMesaO = Model.EDetalles.IdMesaO, NC = Model.EDetalles.NC, D = Model.EDetalles.D, Add = item.Cod_MesasO }, new { @class = "btn btn-info glyphicon glyphicon-plus-sign" })
+                                                    }
+                                                }
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-left btn-group" role="group">
+                                                @if (Model.EDetalles.Add != null)
+                                                {
+                                                    string[] s = Model.EDetalles.Add.Split(new char[] { ',' });
+                                                    int i2 = 0;
+
+                                                    foreach (var item in Model.addMesasO)
+                                                    {
+                                                        for (int i1 = 0; i1 < s.Length; i1++)
+                                                        {
+                                                            if (s[i1] != "")
+                                                            {
+                                                                if (Convert.ToInt32(s[i1]) == item.Cod_MesasO)
+                                                                {
+                                                                    @Html.ActionLink(" M-" + item.Cod_Mesa, "Detalles", "Documentos", new { IdM = Model.EDetalles.IdM, IdC = Model.EDetalles.IdC, IdMesaO = Model.EDetalles.IdMesaO, NC = Model.EDetalles.NC, D = Model.EDetalles.D, Add = "-" + item.Cod_MesasO + "," + Model.EDetalles.Add }, new { @class = "btn btn-warning glyphicon glyphicon-minus-sign", disabled= "disabled" })
+                                                                    i2++;
+                                                                    i1 = s.Length;
+                                                                }
+                                                                else
+                                                                {
+                                                                    i2 = 0;
+                                                                }
+                                                            }
+                                                        }
+                                                        if (i2 == 0)
+                                                        {
+                                                            @Html.ActionLink(" M-" + item.Cod_Mesa, "Detalles", "Documentos", new { IdM = Model.EDetalles.IdM, IdC = Model.EDetalles.IdC, IdMesaO = Model.EDetalles.IdMesaO, NC = Model.EDetalles.NC, D = Model.EDetalles.D, Add = item.Cod_MesasO + "," + Model.EDetalles.Add }, new { @class = "btn btn-info glyphicon glyphicon-plus-sign", disabled = "disabled" })
+                                                        }
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    foreach (var item in Model.addMesasO)
+                                                    {
+                                                        @Html.ActionLink(" M-" + item.Cod_Mesa, "Detalles", "Documentos", new { IdM = Model.EDetalles.IdM, IdC = Model.EDetalles.IdC, IdMesaO = Model.EDetalles.IdMesaO, NC = Model.EDetalles.NC, D = Model.EDetalles.D, Add = item.Cod_MesasO }, new { @class = "btn btn-info glyphicon glyphicon-plus-sign" })
+                                                    }
+                                                }
+                                            </span>
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div>
+                                <pre class="text-right" style="color:#000000">Cantidad Menu: <samp class="badge">@Html.DisplayFor(t => Model.Cmenu)</samp></pre>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="pre-scrollable">
+                                <table class="table table-hover">
+                                    @{
+                                        string aux1 = "";
+                                    }
+                                    <tr style="background-image:url(../../Imagenes/f3df92c17f5c1cc3209e60bc3831f3df.jpg);border-radius:4px;border:2px solid #ffffff">
+                                        <th>@Html.DisplayNameFor(Model => Model.Menus.FirstOrDefault().TipoMenu.Nombre_TMenu)</th>
+                                        <th>@Html.DisplayNameFor(Model => Model.Menus.FirstOrDefault().Nombre_Menu)</th>
+                                        <th>Imagen</th>
+                                        <th>@Html.DisplayName("Cantidad")</th>
+                                        <th>@Html.DisplayNameFor(Model => Model.Menus.FirstOrDefault().Valor_Menu)</th>
+                                        <th>@Html.DisplayName("SubTotal")</th>
+                                    </tr>
+                                    @foreach (var item in Model.Menus)
+                                    {
+                                        int i3 = 0;
+                                        string[] s = aux1.Split(new char[] { ',' });
+                                        foreach (var it in s)
+                                        {
+                                            if (it != "")
+                                            {
+                                                if (Convert.ToInt32(it) == item.Cod_Menu)
+                                                {
+                                                    i3++;
+                                                }
+                                            }
+                                        }
+                                        if (i3 == 0)
+                                        {
+                                            var cantidad = Model.DetalleMesasClientes.Where(t => t.Cod_Menu == item.Cod_Menu).ToList();
+                                            if (cantidad.Count() > 1)
+                                            {
+                                                int can = 0;
+                                                decimal v = 0;
+                                                foreach (var iten in cantidad)
+                                                {
+                                                    Model.SubTotal = item.Valor_Menu * iten.Cantidad_DMC;
+                                                    can = can + iten.Cantidad_DMC;
+                                                }
+                                                v = item.Valor_Menu * Convert.ToDecimal(can);
+                                                <tr style="color:#d2691e">
+                                                    <td>@Html.DisplayFor(t => item.TipoMenu.Nombre_TMenu)</td>
+                                                    <td>@Html.DisplayFor(t => item.Nombre_Menu)</td>
+                                                    <td><img width="60" height="50" src="@Url.Action("ConvertirImagen", "Menus", new { id = item.Cod_Menu })" /></td>
+                                                    <td>@Html.DisplayFor(t => can)</td>
+                                                    <td><samp>@Html.DisplayFor(t => item.Valor_Menu)</samp></td>
+                                                    <td><samp>@Html.DisplayFor(t => v)</samp></td>
+                                                </tr>
+                                            }
+                                            else
+                                            {
+                                                Model.SubTotal = item.Valor_Menu * cantidad.FirstOrDefault().Cantidad_DMC;
+                                                <tr style="color:#d2691e">
+                                                    <td>@Html.DisplayFor(t => item.TipoMenu.Nombre_TMenu)</td>
+                                                    <td>@Html.DisplayFor(t => item.Nombre_Menu)</td>
+                                                    <td><img  style="border:double white;max-width: 100%;" width="60" height="50" src="@Url.Action("ConvertirImagen", "Menus", new { id = item.Cod_Menu })" /></td>
+                                                    <td>@Html.DisplayFor(t => cantidad.FirstOrDefault().Cantidad_DMC)</td>
+                                                    <td><samp>@Html.DisplayFor(t => item.Valor_Menu)</samp></td>
+                                                    <td><samp>@Html.DisplayFor(t => Model.SubTotal)</samp></td>
+                                                </tr>
+
+                                            }
+                                            aux1 = aux1 + "," + item.Cod_Menu;
+                                        }
+                                    }
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <blockquote class="blockquote-reverse">
+                <p class="text-right"> Valor Total </p> <samp class="text-right">@Html.DisplayFor(t => Model.ValorTotal)</samp>
+            </blockquote>
+        </div>
+    </div>
+    <div id="divLoading" style="margin: 0px; padding: 0px; position: fixed; right: 0px;
+         top: 0px; width: 100%; height: 100%; background-color: #666666; z-index: 30001;
+         opacity: .8; filter: alpha(opacity=70);display:none">
+        <p style="position: absolute; top: 30%; left: 35%; color: White;">
+            Cargando, Por favor Espere.... <img src="~/Imagenes/loading_transp.gif">
+        </p>
+    </div>
+    <div id="dvContents" style="border: 1px dotted black; padding: 5px; width: 300px; visibility:hidden ">
+        <span style="font-size: 10pt; font-weight: bold; font-family: Arial" class="text-center">
+            <samp class="text-center">Nombre Restaurante</samp><br />
+            <samp class="text-center">NIT: 000000000</samp><br />
+            <samp class="text-center">Cll 32 # 43-54 B/Gaitan</samp><br />
+            <samp class="text-center">Tell:7898521</samp><br />
+            @{
+                int x = 0;
+                x = Model.consecutivo - 1;
+            }
+            <samp class="text-center">Factura #: @Html.DisplayName(Model.TipoDocumento.Nombre_TDoc)-@x </samp>
+            <br />
+        </span>
+        @if (Model.Cliente.Cod_Cli != 1)
+        {
+            <di>-----------------------------------------------------------<br /> </di>
+                                                <span style="font-size: 10pt; font-weight: bold; font-family: Arial" class="text-center">
+                                                    <samp class="text-center">Nombre: @Html.DisplayName(Model.Cliente.Nombres_Cli + " " + Model.Cliente.Apellidos_Cli)</samp><br />
+                                                    <samp class="text-center">Tel: @Html.DisplayFor(t => Model.Cliente.Telefono_Cli)</samp>
+                                                    <br />
+                                                </span>
+        }
+        <table>
+            <tr>
+                <th>Item</th>
+                <th>@Html.DisplayNameFor(Model => Model.Menus.FirstOrDefault().Nombre_Menu)</th>
+                <th>@Html.DisplayName("Cantidad")</th>
+                <th>@Html.DisplayName("Valor")</th>
+            </tr>
+            -----------------------------------------------------------
+            @{ int i = 1;}
+            @foreach (var item in Model.Menus)
+            {
+                var cantidad = Model.DetalleMesasClientes.Where(t => t.Cod_Menu == item.Cod_Menu).ToList();
+                Model.SubTotal = item.Valor_Menu * cantidad.FirstOrDefault().Cantidad_DMC;
+                <tr>
+                    <td>@i </td>
+                    <td>@Html.DisplayFor(t => item.Nombre_Menu) </td>
+                    <td>@Html.DisplayFor(t => cantidad.FirstOrDefault().Cantidad_DMC) </td>
+                    <td><samp>@Html.DisplayFor(t => item.Valor_Menu)</samp></td>
+                </tr>
+               i++;
+            }
+        </table>
+          <div class="text-right">SUBTOTAL:&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;
+                                           &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;                                        
+                                 @Html.DisplayFor(t => Model.ValorTotal)</div>
+        -----------------------------------------------------------
+        <table>
+            <tr>
+                <th>
+                    Total:&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;
+                    &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;
+                </th>
+                <th>@Html.DisplayFor(t => Model.ValorTotal)</th>
+            </tr>
+            <tr>
+                <th>
+                   EFECTIVO:&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;
+                    &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;
+                </th>
+                <th>0000</th>
+            </tr>
+        </table>
+    </div>
+</div>
+@*<script type="text/javascript" language="javascript">
+    function JavascriptFunction() {
+        var url = '@Url.Action("Detalles", "Documentos")';
+        $("#divLoading").show();
+        $.post(url, null,
+                function (data) {
+                    $("#PID")[0].innerHTML = data;
+                    $("#divLoading").hide();
+                });
+    }
+</script>*@
+<script type="text/javascript" language="javascript">
+    function PrintDiv() {
+            var contents = document.getElementById("dvContents").innerHTML;
+            var frame1 = document.createElement('iframe');
+            frame1.name = "frame1";
+            frame1.style.position = "absolute";
+            frame1.style.top = "-1000000px";
+            document.body.appendChild(frame1);
+            var frameDoc = frame1.contentWindow ? frame1.contentWindow : frame1.contentDocument.document ? frame1.contentDocument.document : frame1.contentDocument;
+            frameDoc.document.open();
+            frameDoc.document.write('<html><head><title>DIV Contents</title>');
+            frameDoc.document.write('</head><body>');
+            frameDoc.document.write(contents);
+            frameDoc.document.write('</body></html>');
+            frameDoc.document.close();
+            setTimeout(function () {
+                window.frames["frame1"].focus();
+                window.frames["frame1"].print();
+                document.body.removeChild(frame1);
+            }, 500);
+            return false;              
+    }
+
+    function JavascriptFunction() {
+        var url = '@Url.Action("Detalles", "Documentos")';
+        $("#divLoading").show();
+        $.post(url, null,
+                function (data) {
+                    $("#PID")[0].innerHTML = data;
+                    $("#divLoading").hide();
+                });
+    }
+</script>

@@ -1,0 +1,1318 @@
+﻿@model IEnumerable<WebRestaurante.Models.TipoMenu>
+<link href="~/Content/HomeIndex.css" rel="stylesheet" />
+
+@{
+    ViewBag.Title = "Menu";
+}
+<div class="container-fluid">
+    <br />
+    <div class="row">
+        @using (Html.BeginForm("AñadirMenus", "Menus", new { IdC = ViewBag.add.IdC, IdM = ViewBag.add.IdM, IdMesaO = ViewBag.add.IdMesaO, CPersona = ViewBag.add.CPersona, NCF = ViewBag.add.NCF, add = ViewBag.add.add }, FormMethod.Post))
+        {
+            @Html.AntiForgeryToken()
+            int TMenu = 0;
+            
+                <div title="@ViewBag.Title" class="col-sm-12 initialism bs-docs-header text-center " style="font-size:30px; max-width: 100%;height: auto; background-image:url(../../Imagenes/f3df92c17f5c1cc3209e60bc3831f3df.jpg); border-radius:4px;border:2px solid #808080; color:white">
+                     MENÚS
+                </div>
+          
+            <div class="col-sm-4" style="margin-top:10px">
+                <div class="panel panel-primary" style="height:450px">
+                    <div class="panel-heading">TIPOS DE MENÙ</div>
+                    <div class="panel-body pre-scrollable" style="height:450px">
+                        <div class="">
+                            <div class="btn-group-vertical" role="group" style="text-transform: uppercase; width:100%">
+                                @{ int i1 = 0;}
+                                @foreach (var item in Model)
+                                {
+                                    if (ViewBag.Nmenu != null)
+                                    {
+                                        if (item.Nombre_TMenu == ViewBag.Nmenu)
+                                        {
+                                            if (i1 == 0)
+                                            {
+                                                <button class="btn btn-primary" type="submit" name="TMenu" style="text-transform: uppercase" value="0">
+                                                    <p class="col-md-6 text-left">TODOS</p><span class="badge col-md-6 text-right">@ViewBag.CMenu</span>
+                                                </button>
+                                                i1++;
+                                            }
+                                            <button class="btn btn-default" type="submit" name="TMenu" style="text-transform: uppercase" value="@item.Cod_TMenu">
+                                                <p class="col-md-6 text-left">@item.Nombre_TMenu</p><span class="badge col-md-6 text-right" style="background:blue">@item.Menu.Where(t => t.Cod_TMenu == item.Cod_TMenu && t.Estado_Menu == true).Count()</span>
+                                            </button>
+                                        }
+                                        else
+                                        {
+                                            if (i1 == 0)
+                                            {
+                                                <button class="btn btn-primary" type="submit" name="TMenu" style="text-transform: uppercase" value="0">
+                                                    <p class="col-md-6 text-left">TODOS</p><span class="badge col-md-6 text-right">@ViewBag.CMenu</span>
+                                                </button>
+                                                i1++;
+                                            }
+                                            <button class="btn btn-primary" type="submit" name="TMenu" style="text-transform: uppercase" value="@item.Cod_TMenu">
+                                                <p class="col-md-6 text-left">@item.Nombre_TMenu</p><span class="badge col-md-6 text-right">@item.Menu.Where(t => t.Cod_TMenu == item.Cod_TMenu && t.Estado_Menu == true).Count()</span>
+                                            </button>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (i1 == 0)
+                                        {
+                                            <button class="btn btn-default" type="submit" name="TMenu" style="text-transform: uppercase" value="0">
+                                                <p class="col-md-6 text-left">TODOS</p><span class="badge col-md-6 text-right" style="background:blue">@ViewBag.CMenu</span>
+                                            </button>
+                                            i1++;
+                                        }
+                                        <button class="btn btn-primary" type="submit" name="TMenu" style="text-transform: uppercase" value="@item.Cod_TMenu">
+                                            <p class="col-md-6 text-left">@item.Nombre_TMenu</p><span class="badge col-md-6 text-right">@item.Menu.Where(t => t.Cod_TMenu == item.Cod_TMenu && t.Estado_Menu == true).Count()</span>
+                                        </button>
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            if (ViewBag.MenuVista != null)
+            {
+                <div class="col-sm-8" style="margin-top:10px">
+                    <div class="panel panel-warning">
+                        <div class="panel-heading" style="text-transform:uppercase">RESULTADO DE BUSQUEDA DE @ViewBag.Nmenu....</div>
+                        <div class="panel-body">
+                            @foreach (var item in Model)
+                            {
+                                foreach (var item1 in item.Menu.Where(t => t.Cod_TMenu == ViewBag.MenuVista && t.Estado_Menu == true).ToList())
+                                {
+                                    if (ViewBag.Cache != null)
+                                    {
+                                        string[] cache = ViewBag.Cache;
+                                        int c = 0;
+                                        for (int i2 = 0; i2 < cache.Length; i2++)
+                                        {
+                                            if (cache[i2] != "")
+                                            {
+                                                string[] s = cache[i2].Split(new char[] { ',' });
+                                                if (item1.Cod_Menu == Convert.ToInt32(s[0]))
+                                                {
+                                                    <div class="col-md-6">
+                                                        <div class="panel-group" id="accordion" style="border:2px solid blue;border-radius:5px;">
+                                                            <div class="panel" style="background-color:#e06767">
+                                                                <div class="panel-heading">
+                                                                    <div class="row">
+                                                                        <div class="col-md-9">
+                                                                            <h4 class="panel-title">
+                                                                                <button class="btn btn-primary" style="border:2px solid blue;width:100%; height:100%" data-toggle="collapse" href="#@Html.DisplayFor(t => item1.Cod_Menu)-@Html.DisplayFor(t => item1.Cod_TMenu)">
+                                                                                    <strong style="color:#000000; height:100%; width:100%; font-size:12px" class="text-center">
+                                                                                        @item1.Nombre_Menu.ToUpper()
+                                                                                    </strong>
+                                                                                </button>
+                                                                            </h4>
+                                                                        </div>
+                                                                        <div class="col-md-3">
+                                                                            <img width="40" height="40" style="border:double white;max-width: 100%;" src="@Url.Action("ConvertirImagen", "Menus", new { id = item1.Cod_Menu })" class="img-rounded" alt="imagen Responsive" />
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                @{string dia = DateTime.Now.DayOfWeek.ToString();
+                                                                    bool selectdia = false;
+                                                                    foreach (var item2 in item1.DayMenu.ToList())
+                                                                    {
+                                                                        if (item2.Dias.NombreI_Dia == dia)
+                                                                        {
+                                                                            selectdia = true;
+                                                                        }
+                                                                    }
+                                                                }
+                                                                @if (selectdia != true)
+                                                                {
+                                                                    <div id="@Html.DisplayFor(t => item1.Cod_Menu)-@Html.DisplayFor(t => item1.Cod_TMenu)" class="panel-collapse collapse" disabled>
+                                                                        <div class="row">
+                                                                            <div class="col-md-12 text-center">
+                                                                                <div style="border:2px solid; background:#f8f8b0">
+                                                                                    <strong style="font-size:20px">DESCRIPCION</strong>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-12">
+                                                                                <div class="row" style="margin-top:5px">
+                                                                                    <div class="col-md-7 text-center">
+                                                                                        <h4>@item1.Descripcion_Menu.ToUpper()</h4>
+                                                                                    </div>
+                                                                                    <div class="col-md-5 text-center">
+                                                                                        <img width="100" height="75" style="border:double; max-width: 100%;" src="@Url.Action("ConvertirImagen", "Menus", new { id = item1.Cod_Menu })" class="img-rounded" alt="imagen Responsive" />
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-12">
+                                                                                <div class="text-center" style="border:2px solid; background:#f8f8b0">
+                                                                                    <strong style="font-size:15px">DIAS DISPONIBLES</strong>
+                                                                                    <div class="row">
+                                                                                        @foreach (var item2 in item1.DayMenu.ToList())
+                                                                                        {
+                                                                                            int i = 0;
+                                                                                            <div class="col-md-1">
+                                                                                                @foreach (var D in item2.Dias.Nombre_Dia)
+                                                                                                {
+                                                                                                    if (i <= 1)
+                                                                                                    {
+                                                                                                        @D
+                                                                                                        i++;
+                                                                                                    }
+                                                                                                }
+
+                                                                                            </div>
+                                                                                        }
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            @if (ViewBag.add.add != null)
+                                                                            {
+                                                                                <div class="col-md-12">
+                                                                                    <div class="row " style="margin-top:5px">
+                                                                                        <div class="col-md-6">
+                                                                                            <div class="row">
+                                                                                                <div class="col-md-12">
+                                                                                                    Seleccionar
+                                                                                                </div>
+                                                                                                <div class="col-md-12">
+                                                                                                    <div class="text-center">
+                                                                                                        <input type="checkbox" class="checkbox form-control" name="selectedMenu" value="@item1.Cod_Menu,@TMenu" id="@TMenu" checked="checked" />
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col-md-6">
+                                                                                            <div class="row">
+                                                                                                <div class="col-md-12">
+                                                                                                    Cantidad
+                                                                                                </div>
+                                                                                                <div class="col-md-12">
+                                                                                                    <select id="@TMenu" name="DCantida" class="form-control">
+                                                                                                        @for (int i = 1; i <= 4; i++)
+                                                                                                        {
+                                                                                                            if (Convert.ToInt32(s[1]) == i)
+                                                                                                            {
+                                                                                                                <option selected="selected">@i</option>
+                                                                                                            }
+                                                                                                            else
+                                                                                                            {
+                                                                                                                <option>@i</option>
+                                                                                                            }
+                                                                                                        }
+                                                                                                    </select>
+                                                                                                    <input type="hidden" name="DCantida" value="@TMenu" />
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            }
+                                                                        </div>
+                                                                        <div class="panel-footer" style="background-color:#808080;color:#ffffff">El @item1.Nombre_Menu.ToUpper() NO ESTA DISPONIBLE</div>
+                                                                    </div>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <div id="@Html.DisplayFor(t => item1.Cod_Menu)-@Html.DisplayFor(t => item1.Cod_TMenu)" class="panel-collapse collapse">
+                                                                        <div class="row">
+                                                                            <div class="col-md-12 text-center">
+                                                                                <div style="border:2px solid; background:#f8f8b0">
+                                                                                    <strong style="font-size:20px">DESCRIPCION</strong>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-12">
+                                                                                <div class="row" style="margin-top:5px">
+                                                                                    <div class="col-md-7 text-center">
+                                                                                        <h4>@item1.Descripcion_Menu.ToUpper()</h4>
+                                                                                    </div>
+                                                                                    <div class="col-md-5 text-center">
+                                                                                        <img width="100" height="75" style="border:double; max-width: 100%;" src="@Url.Action("ConvertirImagen", "Menus", new { id = item1.Cod_Menu })" class="img-rounded" alt="imagen Responsive" />
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-12">
+                                                                                <div class="text-center" style="border:2px solid; background:#f8f8b0">
+                                                                                    <strong style="font-size:15px">DIAS DISPONIBLES</strong>
+                                                                                    <div class="row">
+                                                                                        @foreach (var item2 in item1.DayMenu.ToList())
+                                                                                        {
+                                                                                            int i = 0;
+                                                                                            <div class="col-md-1">
+                                                                                                @foreach (var D in item2.Dias.Nombre_Dia)
+                                                                                                {
+                                                                                                    if (i <= 1)
+                                                                                                    {
+                                                                                                        @D
+                                                                                                        i++;
+                                                                                                    }
+                                                                                                }
+
+                                                                                            </div>
+                                                                                        }
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            @if (ViewBag.add.add != null)
+                                                                            {
+                                                                                <div class="col-md-12">
+                                                                                    <div class="row " style="margin-top:5px">
+                                                                                        <div class="col-md-6">
+                                                                                            <div class="row">
+                                                                                                <div class="col-md-12">
+                                                                                                    Seleccionar
+                                                                                                </div>
+                                                                                                <div class="col-md-12">
+                                                                                                    <div class="text-center">
+                                                                                                        <input type="checkbox" class="checkbox form-control" name="selectedMenu" value="@item1.Cod_Menu,@TMenu" id="@TMenu" checked="checked" />
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col-md-6">
+                                                                                            <div class="row">
+                                                                                                <div class="col-md-12">
+                                                                                                    Cantidad
+                                                                                                </div>
+                                                                                                <div class="col-md-12">
+                                                                                                    <select id="@TMenu" name="DCantida" class="form-control">
+                                                                                                        @for (int i = 1; i <= 4; i++)
+                                                                                                        {
+                                                                                                            if (Convert.ToInt32(s[1]) == i)
+                                                                                                            {
+                                                                                                                <option selected="selected">@i</option>
+                                                                                                            }
+                                                                                                            else
+                                                                                                            {
+                                                                                                                <option>@i</option>
+                                                                                                            }
+                                                                                                        }
+                                                                                                    </select>
+                                                                                                    <input type="hidden" name="DCantida" value="@TMenu" />
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            }
+                                                                        </div>
+                                                                        <div class="panel-footer" style="background-color:#808080;color:#ffffff">FIN @item1.Nombre_Menu.ToUpper()</div>
+                                                                    </div>
+                                                                }
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    i2 = cache.Length;
+                                                }
+                                                else if (i2 == (cache.Length - 1))
+                                                {
+                                                    if (c <= 0)
+                                                    {
+                                                        <div class="col-md-6">
+                                                            <div class="panel-group" id="accordion" style="border:2px solid blue;border-radius:5px;">
+                                                                <div class="panel" style="background-color:#ffffff">
+                                                                    <div class="panel-heading">
+                                                                        <div class="row">
+                                                                            <div class="col-md-9">
+                                                                                <h4 class="panel-title">
+                                                                                    <button class="btn btn-primary" style="border:2px solid blue;width:100%; height:100%" data-toggle="collapse" href="#@Html.DisplayFor(t => item1.Cod_Menu)+@Html.DisplayFor(t => item1.Cod_TMenu)">
+                                                                                        <strong style="color:#000000; height:100%; width:100%; font-size:12px" class="text-center">
+                                                                                            @item1.Nombre_Menu.ToUpper()
+                                                                                        </strong>
+                                                                                    </button>
+                                                                                </h4>
+                                                                            </div>
+                                                                            <div class="col-md-3">
+                                                                                <img width="40" height="40" style="border:double;max-width: 100%;" src="@Url.Action("ConvertirImagen", "Menus", new { id = item1.Cod_Menu })" class="img-rounded" alt="imagen Responsive" />
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    @{string dia = DateTime.Now.DayOfWeek.ToString();
+                                                                        bool selectdia = false;
+                                                                        foreach (var item2 in item1.DayMenu.ToList())
+                                                                        {
+                                                                            if (item2.Dias.NombreI_Dia == dia)
+                                                                            {
+                                                                                selectdia = true;
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                    @if (selectdia == true)
+                                                                    {
+                                                                        <div id="@Html.DisplayFor(t => item1.Cod_Menu)+@Html.DisplayFor(t => item1.Cod_TMenu)" class="panel-collapse collapse" disable>
+                                                                            <div class="row">
+                                                                                <div class="col-md-12 text-center">
+                                                                                    <div style="border:2px solid; background:#f8f8b0">
+                                                                                        <strong style="font-size:20px">DESCRIPCION</strong>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-md-12">
+                                                                                    <div class="row" style="margin-top:5px">
+                                                                                        <div class="col-md-7 text-center">
+                                                                                            <h4>@item1.Descripcion_Menu.ToUpper()</h4>
+                                                                                        </div>
+                                                                                        <div class="col-md-5 text-center">
+                                                                                            <img width="100" height="75" style="border:double; max-width: 100%;" src="@Url.Action("ConvertirImagen", "Menus", new { id = item1.Cod_Menu })" class="img-rounded" alt="imagen Responsive" />
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-md-12">
+                                                                                    <div class="text-center" style="border:2px solid; background:#f8f8b0">
+                                                                                        <strong style="font-size:15px">DIAS DISPONIBLES</strong>
+                                                                                        <div class="row">
+                                                                                            @foreach (var item2 in item1.DayMenu.ToList())
+                                                                                            {
+                                                                                                int i = 0;
+                                                                                                <div class="col-md-1">
+                                                                                                    @foreach (var D in item2.Dias.Nombre_Dia)
+                                                                                                    {
+                                                                                                        if (i <= 1)
+                                                                                                        {
+                                                                                                            @D
+                                                                                                            i++;
+                                                                                                        }
+                                                                                                    }
+
+                                                                                                </div>
+                                                                                            }
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                @if (ViewBag.add.add != null)
+                                                                                {
+                                                                                    <div class="col-md-12">
+                                                                                        <div class="row " style="margin-top:5px">
+                                                                                            <div class="col-md-6">
+                                                                                                <div class="row">
+                                                                                                    <div class="col-md-12">
+                                                                                                        Seleccionar
+                                                                                                    </div>
+                                                                                                    <div class="col-md-12">
+                                                                                                        <div class="text-center">
+                                                                                                            <input type="checkbox" class="checkbox form-control" name="selectedMenu" value="@item1.Cod_Menu,@TMenu" id="@TMenu" />
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="col-md-6">
+                                                                                                <div class="row">
+                                                                                                    <div class="col-md-12">
+                                                                                                        Cantidad
+                                                                                                    </div>
+                                                                                                    <div class="col-md-12">
+                                                                                                        <select id="@TMenu" name="DCantida" class="form-control">
+                                                                                                            @for (int i = 1; i <= 4; i++)
+                                                                                                            {
+                                                                                                                <option>@i</option>
+                                                                                                            }
+                                                                                                        </select>
+                                                                                                        <input type="hidden" name="DCantida" value="@TMenu" />
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                }
+                                                                            </div>
+                                                                            <div class="panel-footer" style="background-color:#808080;color:#ffffff">EL @item1.Nombre_Menu.ToUpper() NO ESTA DISPONIBLE</div>
+                                                                        </div>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <div id="@Html.DisplayFor(t => item1.Cod_Menu)+@Html.DisplayFor(t => item1.Cod_TMenu)" class="panel-collapse collapse">
+                                                                            <div class="row">
+                                                                                <div class="col-md-12 text-center">
+                                                                                    <div style="border:2px solid; background:#f8f8b0">
+                                                                                        <strong style="font-size:20px">DESCRIPCION</strong>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-md-12">
+                                                                                    <div class="row" style="margin-top:5px">
+                                                                                        <div class="col-md-7 text-center">
+                                                                                            <h4>@item1.Descripcion_Menu.ToUpper()</h4>
+                                                                                        </div>
+                                                                                        <div class="col-md-5 text-center">
+                                                                                            <img width="100" height="75" style="border:double; max-width: 100%;" src="@Url.Action("ConvertirImagen", "Menus", new { id = item1.Cod_Menu })" class="img-rounded" alt="imagen Responsive" />
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-md-12">
+                                                                                    <div class="text-center" style="border:2px solid; background:#f8f8b0">
+                                                                                        <strong style="font-size:15px">DIAS DISPONIBLES</strong>
+                                                                                        <div class="row">
+                                                                                            @foreach (var item2 in item1.DayMenu.ToList())
+                                                                                            {
+                                                                                                int i = 0;
+                                                                                                <div class="col-md-1">
+                                                                                                    @foreach (var D in item2.Dias.Nombre_Dia)
+                                                                                                    {
+                                                                                                        if (i <= 1)
+                                                                                                        {
+                                                                                                            @D
+                                                                                                            i++;
+                                                                                                        }
+                                                                                                    }
+
+                                                                                                </div>
+                                                                                            }
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                @if (ViewBag.add.add != null)
+                                                                                {
+                                                                                    <div class="col-md-12">
+                                                                                        <div class="row " style="margin-top:5px">
+                                                                                            <div class="col-md-6">
+                                                                                                <div class="row">
+                                                                                                    <div class="col-md-12">
+                                                                                                        Seleccionar
+                                                                                                    </div>
+                                                                                                    <div class="col-md-12">
+                                                                                                        <div class="text-center">
+                                                                                                            <input type="checkbox" class="checkbox form-control" name="selectedMenu" value="@item1.Cod_Menu,@TMenu" id="@TMenu" />
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="col-md-6">
+                                                                                                <div class="row">
+                                                                                                    <div class="col-md-12">
+                                                                                                        Cantidad
+                                                                                                    </div>
+                                                                                                    <div class="col-md-12">
+                                                                                                        <select id="@TMenu" name="DCantida" class="form-control">
+                                                                                                            @for (int i = 1; i <= 4; i++)
+                                                                                                            {
+                                                                                                                <option>@i</option>
+                                                                                                            }
+                                                                                                        </select>
+                                                                                                        <input type="hidden" name="DCantida" value="@TMenu" />
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                }
+                                                                            </div>
+                                                                            <div class="panel-footer" style="background-color:#808080;color:#ffffff">FIN @item1.Nombre_Menu.ToUpper()</div>
+                                                                        </div>
+                                                                    }
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                    c++;
+                                                }
+                                            }
+                                        }
+
+                                    }
+                                    else
+                                    {
+                                        <div class="col-md-6" style="margin-top:10px">
+                                            <div class="panel-group" id="accordion" style="border:2px solid blue;border-radius:5px;">
+                                                <div class="panel" style="background-color:#ffffff">
+                                                    <div class="panel-heading">
+                                                        <div class="row">
+                                                            <div class="col-md-9">
+                                                                <h4 class="panel-title">
+                                                                    <button class="btn btn-primary" style="border:2px solid blue;width:100%; height:100%" data-toggle="collapse" href="#@Html.DisplayFor(t => item1.Cod_Menu)-@Html.DisplayFor(t => item1.Cod_TMenu)">
+                                                                        <strong style="color:#000000; height:100%; width:100%; font-size:12px" class="text-center">
+                                                                            @item1.Nombre_Menu.ToUpper()
+                                                                        </strong>
+                                                                    </button>
+                                                                </h4>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <img width="40" height="40" style="border:double;max-width: 100%;" src="@Url.Action("ConvertirImagen", "Menus", new { id = item1.Cod_Menu })" class="img-rounded" alt="imagen Responsive" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    @{string dia = DateTime.Now.DayOfWeek.ToString();
+                                                        bool selectdia = false;
+                                                        foreach (var item2 in item1.DayMenu.ToList())
+                                                        {
+                                                            if (item2.Dias.NombreI_Dia == dia)
+                                                            {
+                                                                selectdia = true;
+                                                            }
+                                                        }
+                                                    }
+                                                    @if (selectdia != true)
+                                                    {
+                                                        <div id="@Html.DisplayFor(t => item1.Cod_Menu)-@Html.DisplayFor(t => item1.Cod_TMenu)" class="panel-collapse collapse" disable>
+                                                            <div class="row">
+                                                                <div class="col-md-12 text-center">
+                                                                    <div style="border:2px solid; background:#f8f8b0">
+                                                                        <strong style="font-size:20px">DESCRIPCION</strong>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-12">
+                                                                    <div class="row" style="margin-top:5px">
+                                                                        <div class="col-md-7 text-center">
+                                                                            <h4>@item1.Descripcion_Menu.ToUpper()</h4>
+                                                                        </div>
+                                                                        <div class="col-md-5 text-center">
+                                                                            <img width="100" height="75" style="border:double; max-width: 100%;" src="@Url.Action("ConvertirImagen", "Menus", new { id = item1.Cod_Menu })" class="img-rounded" alt="imagen Responsive" />
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-12">
+                                                                    <div class="text-center" style="border:2px solid; background:#f8f8b0">
+                                                                        <strong style="font-size:15px">DIAS DISPONIBLES</strong>
+                                                                        <div class="row">
+                                                                            @foreach (var item2 in item1.DayMenu.ToList())
+                                                                            {
+                                                                                int i = 0;
+                                                                                <div class="col-md-1">
+                                                                                    @foreach (var D in item2.Dias.Nombre_Dia)
+                                                                                    {
+                                                                                        if (i <= 1)
+                                                                                        {
+                                                                                            @D
+                                                                                            i++;
+                                                                                        }
+                                                                                    }
+
+                                                                                </div>
+                                                                            }
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="panel-footer" style="background-color:#808080;color:#ffffff">EL @item1.Nombre_Menu.ToUpper() NO ESTA DISPONIBLE</div>
+                                                        </div>
+                                                    }
+                                                    else
+                                                    {
+                                                        <div id="@Html.DisplayFor(t => item1.Cod_Menu)-@Html.DisplayFor(t => item1.Cod_TMenu)" class="panel-collapse collapse">
+                                                            <div class="row">
+                                                                <div class="col-md-12 text-center">
+                                                                    <div style="border:2px solid; background:#f8f8b0">
+                                                                        <strong style="font-size:20px">DESCRIPCION</strong>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-12">
+                                                                    <div class="row" style="margin-top:5px">
+                                                                        <div class="col-md-7 text-center">
+                                                                            <h4>@item1.Descripcion_Menu.ToUpper()</h4>
+                                                                        </div>
+                                                                        <div class="col-md-5 text-center">
+                                                                            <img width="100" height="75" style="border:double; max-width: 100%;" src="@Url.Action("ConvertirImagen", "Menus", new { id = item1.Cod_Menu })" class="img-rounded" alt="imagen Responsive" />
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-12">
+                                                                    <div class="text-center" style="border:2px solid; background:#f8f8b0">
+                                                                        <strong style="font-size:15px">DIAS DISPONIBLES</strong>
+                                                                        <div class="row">
+                                                                            @foreach (var item2 in item1.DayMenu.ToList())
+                                                                            {
+                                                                                int i = 0;
+                                                                                <div class="col-md-1">
+                                                                                    @foreach (var D in item2.Dias.Nombre_Dia)
+                                                                                    {
+                                                                                        if (i <= 1)
+                                                                                        {
+                                                                                            @D
+                                                                                            i++;
+                                                                                        }
+                                                                                    }
+
+                                                                                </div>
+                                                                            }
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                @if (ViewBag.add.add != null)
+                                                                {
+                                                                    <div class="col-md-12">
+                                                                        <div class="row " style="margin-top:5px">
+                                                                            <div class="col-md-6">
+                                                                                <div class="row">
+                                                                                    <div class="col-md-12">
+                                                                                        Seleccionar
+                                                                                    </div>
+                                                                                    <div class="col-md-12">
+                                                                                        <div class="text-center">
+                                                                                            <input type="checkbox" class="checkbox form-control" name="selectedMenu" value="@item1.Cod_Menu,@TMenu" id="@TMenu" />
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-6">
+                                                                                <div class="row">
+                                                                                    <div class="col-md-12">
+                                                                                        Cantidad
+                                                                                    </div>
+                                                                                    <div class="col-md-12">
+                                                                                        <select id="@TMenu" name="DCantida" class="form-control">
+                                                                                            @for (int i = 1; i <= 4; i++)
+                                        {
+                                                                                                <option>@i</option>
+                                                                                            }
+                                                                                        </select>
+                                                                                        <input type="hidden" name="DCantida" value="@TMenu" />
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                }
+                                                            </div>
+                                                            <div class="panel-footer" style="background-color:#808080;color:#ffffff">FIN @item1.Nombre_Menu.ToUpper()</div>
+                                                        </div>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                    TMenu++;
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+            foreach (var item in Model)
+            {
+                            <div class="col-sm-12 col-md-4" style="margin-top:10px">
+                                <div class="panel panel-info">
+                                    <div class="panel-heading">@item.Nombre_TMenu.ToUpper()</div>
+                                    <div class="panel-body pre-scrollable" style="height:300px">
+                                        <div class="row">
+                                            @foreach (var item1 in item.Menu.Where(m => m.Cod_TMenu == item.Cod_TMenu && m.Estado_Menu == true).ToList())
+                                            {
+                                                if (ViewBag.Cache != null)
+                                                {
+                                                    string[] cache = ViewBag.Cache;
+                                                    int c =0;
+                                                    for (int i2 = 0; i2 < cache.Length; i2++)
+                                                    {
+                                                        if (cache[i2] != "")
+                                                        {
+                                                            string[] s = cache[i2].Split(new char[] { ',' });
+                                                            if (item1.Cod_Menu == Convert.ToInt32(s[0]))
+                                                            {
+                                                                <div class="col-md-12">
+                                                                    <div class="panel-group" id="accordion" style="border:2px solid blue">
+                                                                        <div class="panel" style="background-image:url(../../Imagenes/textura-fondo-azul-1573.jpg)">
+                                                                            <div class="panel-heading">
+                                                                                <div class="row">
+                                                                                    <div class="col-md-9">
+                                                                                        <h4 class="panel-title">
+                                                                                            <button class="btn btn-primary" style="border:2px solid white;border-radius:5px;width:100%; height:100%" data-toggle="collapse" href="#@Html.DisplayFor(t => item1.Cod_TMenu)@Html.DisplayFor(t => item1.Cod_Menu)">
+                                                                                                <strong style="color:#000000; height:100%; width:100%; font-size:12px" class="text-center">
+                                                                                                    @item1.Nombre_Menu.ToUpper()
+                                                                                                </strong>
+                                                                                            </button>
+                                                                                        </h4>
+                                                                                    </div>
+                                                                                    <div class="col-md-3">
+                                                                                        <img width="40" height="40" style="border:double white;max-width: 100%;" src="@Url.Action("ConvertirImagen", "Menus", new { id = item1.Cod_Menu })" class="img-rounded" alt="imagen Responsive" />
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            @{string dia = DateTime.Now.DayOfWeek.ToString();
+                                                                                bool selectdia = false;
+                                                                                foreach (var item2 in item1.DayMenu.ToList())
+                                                                                {
+                                                                                    if (item2.Dias.NombreI_Dia == dia)
+                                                                                    {
+                                                                                        selectdia = true;
+                                                                                    }
+                                                                                }
+                                                                            }
+                                                                            @if (selectdia == true)
+                                                                            {
+                                                                                <div id="@Html.DisplayFor(t => item1.Cod_TMenu)@Html.DisplayFor(t => item1.Cod_Menu)" class="panel-collapse collapse">
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-12 text-center">
+                                                                                            <div style="border:2px solid white; background-image:url(../../Imagenes/f3df92c17f5c1cc3209e60bc3831f3df.jpg)">
+                                                                                                <strong class="text-primary" style="font-size:20px">DESCRIPCION</strong>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col-md-12">
+                                                                                            <div class="row" style="margin-top:5px">
+                                                                                                <div class="col-md-7 text-center" style="color:white">
+                                                                                                    <h4>@item1.Descripcion_Menu.ToUpper()</h4>
+                                                                                                </div>
+                                                                                                <div class="col-md-5 text-center">
+                                                                                                    <img width="100" height="75" style="border:double white; max-width: 100%;" src="@Url.Action("ConvertirImagen", "Menus", new { id = item1.Cod_Menu })" class="img-rounded" alt="imagen Responsive" />
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col-md-12">
+                                                                                            <div class="text-center" style="border:2px solid white; background-image:url(../../Imagenes/f3df92c17f5c1cc3209e60bc3831f3df.jpg)">
+                                                                                                <strong class="text-primary" style="font-size:15px">DIAS DISPONIBLES</strong>
+                                                                                                <div class="row">
+                                                                                                    @foreach (var item2 in item1.DayMenu.ToList())
+                                                                                                    {
+                                                                                                        int i = 0;
+                                                                                                        <div class="col-md-1" style="color:white">
+                                                                                                            @foreach (var D in item2.Dias.Nombre_Dia)
+                                                                                                            {
+                                                                                                                if (i <= 1)
+                                                                                                                {
+                                                                                                                    @D
+                                                                                                                    i++;
+                                                                                                                }
+                                                                                                            }
+
+                                                                                                        </div>
+                                                                                                    }
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        @if (ViewBag.add.add != null)
+                                                                                        {
+                                                                                            <div class="col-md-12">
+                                                                                                <div class="row " style="margin-top:5px">
+                                                                                                    <div class="col-md-6">
+                                                                                                        <div class="row">
+                                                                                                            <div class="col-md-12" style="color:white">
+                                                                                                                Seleccionar
+                                                                                                            </div>
+                                                                                                            <div class="col-md-12">
+                                                                                                                <div class="text-center">
+                                                                                                                    <input type="checkbox" class="checkbox form-control" name="selectedMenu" value="@item1.Cod_Menu,@TMenu" id="@TMenu" checked="checked" />
+                                                                                                                </div>
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                    <div class="col-md-6">
+                                                                                                        <div class="row">
+                                                                                                            <div class="col-md-12" style="color:white">
+                                                                                                                Cantidad
+                                                                                                            </div>
+                                                                                                            <div class="col-md-12">
+                                                                                                                <select id="@TMenu" name="DCantida" class="form-control">
+                                                                                                                    @for (int i = 1; i <= 4; i++)
+                                                                                                                    {
+                                                                                                                        if (Convert.ToInt32(s[1]) == i)
+                                                                                                                        {
+                                                                                                                            <option selected="selected">@i</option>
+                                                                                                                        }
+                                                                                                                        else
+                                                                                                                        {
+                                                                                                                            <option>@i</option>
+                                                                                                                        }
+                                                                                                                    }
+                                                                                                                </select>
+                                                                                                                <input type="hidden" name="DCantida" value="@TMenu" />
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        }
+                                                                                    </div>
+                                                                                    <div class="panel-footer" style="background-color:#808080;color:#ffffff">EL @item1.Nombre_Menu.ToUpper() NO ESTA DISPONIBLE</div>
+                                                                                </div>
+                                                                            }
+                                                                            else
+                                                                            {
+                                                                                <div id="@Html.DisplayFor(t => item1.Cod_TMenu)@Html.DisplayFor(t => item1.Cod_Menu)" class="panel-collapse collapse">
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-12 text-center">
+                                                                                            <div style="border:2px solid white;background-image:url(../../Imagenes/f3df92c17f5c1cc3209e60bc3831f3df.jpg)">
+                                                                                                <strong class="text-primary" style="font-size:20px">DESCRIPCION</strong>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col-md-12">
+                                                                                            <div class="row" style="margin-top:5px">
+                                                                                                <div class="col-md-7 text-center" style="color:white">
+                                                                                                    <h4>@item1.Descripcion_Menu.ToUpper()</h4>
+                                                                                                </div>
+                                                                                                <div class="col-md-5 text-center">
+                                                                                                    <img width="100" height="75" style="border:double white; max-width: 100%;" src="@Url.Action("ConvertirImagen", "Menus", new { id = item1.Cod_Menu })" class="img-rounded" alt="imagen Responsive" />
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col-md-12">
+                                                                                            <div class="text-center" style="border:2px solid white; background-image:url(../../Imagenes/f3df92c17f5c1cc3209e60bc3831f3df.jpg)">
+                                                                                                <strong class="text-primary" style="font-size:15px">DIAS DISPONIBLES</strong>
+                                                                                                <div class="row">
+                                                                                                    @foreach (var item2 in item1.DayMenu.ToList())
+                                                                                                    {
+                                                                                                        int i = 0;
+                                                                                                        <div class="col-md-1" style="color:white">
+                                                                                                            @foreach (var D in item2.Dias.Nombre_Dia)
+                                                                                                            {
+                                                                                                                if (i <= 1)
+                                                                                                                {
+                                                                                                                    @D
+                                                                                                                    i++;
+                                                                                                                }
+                                                                                                            }
+
+                                                                                                        </div>
+                                                                                                    }
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        @if (ViewBag.add.add != null)
+                                                                                        {
+                                                                                            <div class="col-md-12">
+                                                                                                <div class="row " style="margin-top:5px">
+                                                                                                    <div class="col-md-6">
+                                                                                                        <div class="row">
+                                                                                                            <div class="col-md-12" style="color:white">
+                                                                                                                Seleccionar
+                                                                                                            </div>
+                                                                                                            <div class="col-md-12">
+                                                                                                                <div class="text-center">
+                                                                                                                    <input type="checkbox" class="checkbox form-control" name="selectedMenu" value="@item1.Cod_Menu,@TMenu" id="@TMenu" checked="checked" />
+                                                                                                                </div>
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                    <div class="col-md-6">
+                                                                                                        <div class="row">
+                                                                                                            <div class="col-md-12" style="color:white">
+                                                                                                                Cantidad
+                                                                                                            </div>
+                                                                                                            <div class="col-md-12">
+                                                                                                                <select id="@TMenu" name="DCantida" class="form-control">
+                                                                                                                    @for (int i = 1; i <= 4; i++)
+                                                                                                                    {
+                                                                                                                        if (Convert.ToInt32(s[1]) == i)
+                                                                                                                        {
+                                                                                                                            <option selected="selected">@i</option>
+                                                                                                                        }
+                                                                                                                        else
+                                                                                                                        {
+                                                                                                                            <option>@i</option>
+                                                                                                                        }
+                                                                                                                    }
+                                                                                                                </select>
+                                                                                                                <input type="hidden" name="DCantida" value="@TMenu" />
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        }
+                                                                                    </div>
+                                                                                    <div class="panel-footer" style="background-color:#808080;color:#ffffff">FIN @item1.Nombre_Menu.ToUpper()</div>
+                                                                                </div>
+                                                                            }
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                i2 = cache.Length;
+                                                            }
+                                                            else if (i2 == (cache.Length-1))
+                                                            {
+                                                                if (c <= 0)
+                                                                {
+                                                                    <div class="col-md-12">
+                                                                        <div class="panel-group" id="accordion" style="border:2px solid blue">
+                                                                            <div class="panel" style="background-color:#ffffff">
+                                                                                <div class="panel-heading">
+                                                                                    <div class="row">
+                                                                                        <div class="col-md-9">
+                                                                                            <h4 class="panel-title">
+                                                                                                <button class="btn btn-primary" style="width:100%; height:100%" data-toggle="collapse" href="#@Html.DisplayFor(t => item1.Cod_TMenu)@Html.DisplayFor(t => item1.Cod_Menu)">
+                                                                                                    <strong style="color:#000000; height:100%; width:100%; font-size:12px" class="text-center">
+                                                                                                        @item1.Nombre_Menu.ToUpper()
+                                                                                                    </strong>
+                                                                                                </button>
+                                                                                            </h4>
+                                                                                        </div>
+                                                                                        <div class="col-md-3">
+                                                                                            <img width="40" height="40" style="border:double white;max-width: 100%;" src="@Url.Action("ConvertirImagen", "Menus", new { id = item1.Cod_Menu })" class="img-rounded" alt="imagen Responsive" />
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                                @{string dia = DateTime.Now.DayOfWeek.ToString();
+                                                                                    bool selectdia = false;
+                                                                                    foreach (var item2 in item1.DayMenu.ToList())
+                                                                                    {
+                                                                                        if (item2.Dias.NombreI_Dia == dia)
+                                                                                        {
+                                                                                            selectdia = true;
+                                                                                        }
+                                                                                    }
+                                                                                }
+                                                                                @if (selectdia != true)
+                                                                                {
+                                                                                    <div id="@Html.DisplayFor(t => item1.Cod_TMenu)@Html.DisplayFor(t => item1.Cod_Menu)" class="panel-collapse collapse">
+                                                                                        <div class="row">
+                                                                                            <div class="col-md-12 text-center">
+                                                                                                <div style="border:2px solid white; background-image:url(../../Imagenes/f3df92c17f5c1cc3209e60bc3831f3df.jpg)">
+                                                                                                    <strong class="text-primary" style="font-size:20px">DESCRIPCION</strong>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="col-md-12">
+                                                                                                <div class="row" style="margin-top:5px">
+                                                                                                    <div class="col-md-7 text-center" style="color:white">
+                                                                                                        <h4>@item1.Descripcion_Menu.ToUpper()</h4>
+                                                                                                    </div>
+                                                                                                    <div class="col-md-5 text-center">
+                                                                                                        <img width="100" height="75" style="border:double white; max-width: 100%;" src="@Url.Action("ConvertirImagen", "Menus", new { id = item1.Cod_Menu })" class="img-rounded" alt="imagen Responsive" />
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="col-md-12">
+                                                                                                <div class="text-center" style="border:2px solid white; background:#f8f8b0">
+                                                                                                    <strong class="text-primary" style="font-size:15px">DIAS DISPONIBLES</strong>
+                                                                                                    <div class="row">
+                                                                                                        @foreach (var item2 in item1.DayMenu.ToList())
+                                                                                                        {
+                                                                                                            int i = 0;
+                                                                                                            <div class="col-md-1">
+                                                                                                                @foreach (var D in item2.Dias.Nombre_Dia)
+                                                                                                                {
+                                                                                                                    if (i <= 1)
+                                                                                                                    {
+                                                                                                                        @D
+                                                                                                                        i++;
+                                                                                                                    }
+                                                                                                                }
+
+                                                                                                            </div>
+                                                                                                        }
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            @if (ViewBag.add.add != null)
+                                                                                            {
+                                                                                                <div class="col-md-12">
+                                                                                                    <div class="row " style="margin-top:5px">
+                                                                                                        <div class="col-md-6">
+                                                                                                            <div class="row">
+                                                                                                                <div class="col-md-12" style="color:white">
+                                                                                                                    Seleccionar
+                                                                                                                </div>
+                                                                                                                <div class="col-md-12">
+                                                                                                                    <div class="text-center">
+                                                                                                                        <input type="checkbox" class="checkbox form-control" name="selectedMenu" value="@item1.Cod_Menu,@TMenu" id="@TMenu" checked="checked" />
+                                                                                                                    </div>
+                                                                                                                </div>
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                        <div class="col-md-6">
+                                                                                                            <div class="row">
+                                                                                                                <div class="col-md-12" style="color:white">
+                                                                                                                    Cantidad
+                                                                                                                </div>
+                                                                                                                <div class="col-md-12">
+                                                                                                                    <select id="@TMenu" name="DCantida" class="form-control">
+                                                                                                                        @for (int i = 1; i <= 4; i++)
+                                                                                                                        {
+                                                                                                                            if (Convert.ToInt32(s[1]) == i)
+                                                                                                                            {
+                                                                                                                                <option selected="selected">@i</option>
+                                                                                                                            }
+                                                                                                                            else
+                                                                                                                            {
+                                                                                                                                <option>@i</option>
+                                                                                                                            }
+                                                                                                                        }
+                                                                                                                    </select>
+                                                                                                                    <input type="hidden" name="DCantida" value="@TMenu" />
+                                                                                                                </div>
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            }
+                                                                                        </div>
+                                                                                        <div class="panel-footer" style="background-color:#808080;color:#ffffff">EL @item1.Nombre_Menu.ToUpper() NO ESTA DISPONIBLE</div>
+                                                                                    </div>
+                                                                                }
+                                                                                else
+                                                                                {
+                                                                                    <div id="@Html.DisplayFor(t => item1.Cod_TMenu)@Html.DisplayFor(t => item1.Cod_Menu)" class="panel-collapse collapse">
+                                                                                        <div class="row">
+                                                                                            <div class="col-md-12 text-center">
+                                                                                                <div style="border:2px solid white; background-image:url(../../Imagenes/f3df92c17f5c1cc3209e60bc3831f3df.jpg)">
+                                                                                                    <strong class="text-primary" style="font-size:20px">DESCRIPCION</strong>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="col-md-12">
+                                                                                                <div class="row" style="margin-top:5px">
+                                                                                                    <div class="col-md-7 text-center" style="color:white">
+                                                                                                        <h4>@item1.Descripcion_Menu.ToUpper()</h4>
+                                                                                                    </div>
+                                                                                                    <div class="col-md-5 text-center">
+                                                                                                        <img width="100" height="75" style="border:double white; max-width: 100%;" src="@Url.Action("ConvertirImagen", "Menus", new { id = item1.Cod_Menu })" class="img-rounded" alt="imagen Responsive" />
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            <div class="col-md-12">
+                                                                                                <div class="text-center" style="border:2px solid white; background-image:url(../../Imagenes/f3df92c17f5c1cc3209e60bc3831f3df.jpg)">
+                                                                                                    <strong class="text-primary" style="font-size:15px">DIAS DISPONIBLES</strong>
+                                                                                                    <div class="row">
+                                                                                                        @foreach (var item2 in item1.DayMenu.ToList())
+                                                                                                        {
+                                                                                                            int i = 0;
+                                                                                                            <div class="col-md-1">
+                                                                                                                @foreach (var D in item2.Dias.Nombre_Dia)
+                                                                                                                {
+                                                                                                                    if (i <= 1)
+                                                                                                                    {
+                                                                                                                        @D
+                                                                                                                        i++;
+                                                                                                                    }
+                                                                                                                }
+
+                                                                                                            </div>
+                                                                                                        }
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                            @if (ViewBag.add.add != null)
+                                                                                            {
+                                                                                                <div class="col-md-12">
+                                                                                                    <div class="row " style="margin-top:5px">
+                                                                                                        <div class="col-md-6">
+                                                                                                            <div class="row">
+                                                                                                                <div class="col-md-12" style="color:white">
+                                                                                                                    Seleccionar
+                                                                                                                </div>
+                                                                                                                <div class="col-md-12">
+                                                                                                                    <div class="text-center">
+                                                                                                                        <input type="checkbox" class="checkbox form-control" name="selectedMenu" value="@item1.Cod_Menu,@TMenu" id="@TMenu" checked="checked" />
+                                                                                                                    </div>
+                                                                                                                </div>
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                        <div class="col-md-6">
+                                                                                                            <div class="row">
+                                                                                                                <div class="col-md-12" style="color:white">
+                                                                                                                    Cantidad
+                                                                                                                </div>
+                                                                                                                <div class="col-md-12">
+                                                                                                                    <select id="@TMenu" name="DCantida" class="form-control">
+                                                                                                                        @for (int i = 1; i <= 4; i++)
+                                                                                                                        {
+                                                                                                                            if (Convert.ToInt32(s[1]) == i)
+                                                                                                                            {
+                                                                                                                                <option selected="selected">@i</option>
+                                                                                                                            }
+                                                                                                                            else
+                                                                                                                            {
+                                                                                                                                <option>@i</option>
+                                                                                                                            }
+                                                                                                                        }
+                                                                                                                    </select>
+                                                                                                                    <input type="hidden" name="DCantida" value="@TMenu" />
+                                                                                                                </div>
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            }
+                                                                                        </div>
+                                                                                        <div class="panel-footer" style="background-color:#808080;color:#ffffff">FIN @item1.Nombre_Menu.ToUpper()</div>
+                                                                                    </div>
+                                                                                }
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                }
+                                                                c++;
+                                                            }
+                                                        }
+                                                    }
+
+                                                }
+                                                else
+                                                {
+                                                    <div class="col-md-12">
+                                                        <div class="panel-group" id="accordion" style="border-radius:5px; border:2px solid blue">
+                                                            <div class="panel" style="background-image:url(../../Imagenes/textura-fondo-azul-1573.jpg)">
+                                                                <div class="panel-heading">
+                                                                    <div class="row">
+                                                                        <div class="col-md-9">
+                                                                            <h4 class="panel-title">
+                                                                                <button class="btn btn-primary" style="border:2px solid white;width:100%; height:100%" data-toggle="collapse" href="#@Html.DisplayFor(t => item1.Cod_TMenu)@Html.DisplayFor(t => item1.Cod_Menu)">
+                                                                                    <strong style="color:#000000; height:100%; width:100%; font-size:12px" class="text-center">
+                                                                                        @item1.Nombre_Menu.ToUpper()
+                                                                                    </strong>
+                                                                                </button>
+                                                                            </h4>
+                                                                        </div>
+                                                                        <div class="col-md-3">
+                                                                            <img width="40" height="40" style="border:double white;max-width: 100%;" src="@Url.Action("ConvertirImagen", "Menus", new { id = item1.Cod_Menu })" class="img-rounded" alt="imagen Responsive" />
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                @{string dia = DateTime.Now.DayOfWeek.ToString();
+                                                                    bool selectdia = false;
+                                                                    foreach (var item2 in item1.DayMenu.ToList())
+                                                                    {
+                                                                        if (item2.Dias.NombreI_Dia == dia)
+                                                                        {
+                                                                            selectdia = true;
+                                                                        }
+                                                                    }
+                                                                }
+                                                                @if (selectdia != true)
+                                                                {
+                                                                    <div id="@Html.DisplayFor(t => item1.Cod_TMenu)@Html.DisplayFor(t => item1.Cod_Menu)" class="panel-collapse collapse">
+                                                                        <div class="row">
+                                                                            <div class="col-md-12 text-center">
+                                                                                <div style="border:2px solid white; background-image:url(../../Imagenes/f3df92c17f5c1cc3209e60bc3831f3df.jpg)">
+                                                                                    <strong class="text-primary" style="font-size:20px">DESCRIPCION</strong>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-12">
+                                                                                <div class="row" style="margin-top:5px">
+                                                                                    <div class="col-md-7 text-center" style="color:white">
+                                                                                        <h4>@item1.Descripcion_Menu.ToUpper()</h4>
+                                                                                    </div>
+                                                                                    <div class="col-md-5 text-center">
+                                                                                        <img width="100" height="75" style="border:double white; max-width: 100%;" src="@Url.Action("ConvertirImagen", "Menus", new { id = item1.Cod_Menu })" class="img-rounded" alt="imagen Responsive" />
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-12">
+                                                                                <div class="text-center" style="border:2px solid; background-image:url(../../Imagenes/f3df92c17f5c1cc3209e60bc3831f3df.jpg)">
+                                                                                    <strong class="text-primary" style="font-size:15px">DIAS DISPONIBLES</strong>
+                                                                                    <div class="row">
+                                                                                        @foreach (var item2 in item1.DayMenu.ToList())
+                                                                                        {
+                                                                                            int i = 0;
+                                                                                            <div class="col-md-1" style="color:#ffffff">
+                                                                                                @foreach (var D in item2.Dias.Nombre_Dia)
+                                                                                                {
+                                                                                                    if (i <= 1)
+                                                                                                    {
+                                                                                                        @D
+                                                                                                        i++;
+                                                                                                    }
+                                                                                                }
+
+                                                                                            </div>
+                                                                                        }
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="panel-footer" style="background-color:#808080;color:#ffffff">EL @item1.Nombre_Menu.ToUpper() NO ESTA DISPONIBLE</div>
+                                                                    </div>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <div id="@Html.DisplayFor(t => item1.Cod_TMenu)@Html.DisplayFor(t => item1.Cod_Menu)" class="panel-collapse collapse">
+                                                                        <div class="row">
+                                                                            <div class="col-md-12 text-center">
+                                                                                <div style="border:2px solid white;background-image:url(../../Imagenes/f3df92c17f5c1cc3209e60bc3831f3df.jpg)">
+                                                                                    <strong class="text-primary" style="font-size:20px">DESCRIPCION</strong>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-12">
+                                                                                <div class="row" style="margin-top:5px">
+                                                                                    <div class="col-md-7 text-center" style="color:white">
+                                                                                        <h4>@item1.Descripcion_Menu.ToUpper()</h4>
+                                                                                    </div>
+                                                                                    <div class="col-md-5 text-center">
+                                                                                        <img width="100" height="75" style="border:double white; max-width: 100%;" src="@Url.Action("ConvertirImagen", "Menus", new { id = item1.Cod_Menu })" class="img-rounded" alt="imagen Responsive" />
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="col-md-12">
+                                                                                <div class="text-center" style="border:2px solid white; background-image:url(../../Imagenes/f3df92c17f5c1cc3209e60bc3831f3df.jpg)">
+                                                                                    <strong class="text-primary" style="font-size:15px">DIAS DISPONIBLES</strong>
+                                                                                    <div class="row">
+                                                                                        @foreach (var item2 in item1.DayMenu.ToList())
+                                                                                        {
+                                                                                            int i = 0;
+                                                                                            <div class="col-md-1" style="color:white">
+                                                                                                @foreach (var D in item2.Dias.Nombre_Dia)
+                                                                                                {
+                                                                                                    if (i <= 1)
+                                                                                                    {
+                                                                                                        @D
+                                                                                                        i++;
+                                                                                                    }
+                                                                                                }
+
+                                                                                            </div>
+                                                                                        }
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>   
+                                                                            @if (ViewBag.add.add != null)
+                                                                            {
+                                                                                <div class="col-md-12">
+                                                                                    <div class="row " style="margin-top:5px">
+                                                                                        <div class="col-md-6">
+                                                                                            <div class="row">
+                                                                                                <div class="col-md-12" style="color:white">
+                                                                                                    Seleccionar
+                                                                                                </div>
+                                                                                                <div class="col-md-12">
+                                                                                                    <div class="text-center">
+                                                                                                        <input type="checkbox" class="checkbox form-control" name="selectedMenu" value="@item1.Cod_Menu,@TMenu" id="@TMenu" />
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                        <div class="col-md-6">
+                                                                                            <div class="row">
+                                                                                                <div class="col-md-12" style="color:white">
+                                                                                                    Cantidad
+                                                                                                </div>
+                                                                                                <div class="col-md-12">
+                                                                                                    <select id="@TMenu" name="DCantida" class="form-control">
+                                                                                                        @for (int i = 1; i <= 4; i++)
+                                                                                                        {
+                                                                                                            <option>@i</option>
+                                                                                                        }
+                                                                                                    </select>
+                                                                                                    <input type="hidden" name="DCantida" value="@TMenu" />
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            }                                                                        
+                                                                        </div>
+                                                                        <div class="panel-footer" style="background-color:#808080;color:#ffffff">FIN @item1.Nombre_Menu.ToUpper()</div>
+                                                                    </div>
+                                                                }
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                }
+                                                TMenu++;
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            }
+                            <div class="col-sm-12">
+                                @if (ViewBag.add.add != null)
+                                {
+                                    <div class="form-group">
+                                        <div class="col-md-offset-2 col-md-10">
+                                            @Html.ActionLink("Cancelar", "MenuVista", "Menus", new { IdC = ViewBag.add.IdC, IdM = ViewBag.add.IdM, IdMesaO = ViewBag.add.IdMesaO, CPersona = ViewBag.add.CPersona, add = 2, NCF = ViewBag.add.NCF }, new { @class = "btn btn-danger", style = "position: fixed; bottom: 10px; left: 2%;" })
+                                            <input type="submit" class="btn btn-success" value="Añadir Menu" onclick="JavascriptFunction()" name="searchQuery" style="position: fixed; bottom: 10px; right: 1%;" />
+                                        </div>
+                                    </div>
+                                    <div id="divLoading" style="margin: 0px; padding: 0px; position: fixed; right: 0px;
+              top: 0px; width: 100%; height: 100%; background-color: #666666; z-index: 30001;
+              opacity: .8; filter: alpha(opacity=70);display:none">
+                                        <p style="position: absolute; top: 30%; left: 35%; color: White;">
+                                            Cargando, Por favor Espere.... <img src="~/Imagenes/loading_transp.gif">
+                                        </p>
+                                    </div>
+                                }
+                            </div>
+                            }
+                        </div>
+                    </div>
+                    <script type="text/javascript" language="javascript">
+                        function JavascriptFunction() {
+                            var url = '@Url.Action("AñadirMenus", "Menus")';
+                            $("#divLoading").show();
+                            $.post(url, null,
+                                    function (data) {
+                                        $("#PID")[0].innerHTML = data;
+                                        $("#divLoading").hide();
+                                    });
+                        }
+                    </script>

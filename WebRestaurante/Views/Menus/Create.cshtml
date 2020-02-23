@@ -1,0 +1,97 @@
+﻿@model WebRestaurante.ModelsViews.MenuView
+
+@{
+    ViewBag.Title = "CREAR MENU";
+}
+<div class="container-fluid" style="color:white">
+    <br />
+    <div class="row">
+        @using (Html.BeginForm("Create", "Menus", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {           
+           @Html.AntiForgeryToken()
+          
+            <div title="@ViewBag.Title" class="col-sm-12 initialism bs-docs-header text-center " style="font-size:30px; max-width: 100%;height: auto; background-image:url(../../Imagenes/f3df92c17f5c1cc3209e60bc3831f3df.jpg); border-radius:4px;border:2px solid #808080; color:white">
+                @ViewBag.Title
+            </div>
+            
+            if (ViewBag.Error != null)
+            {
+                <div class="col-sm-12" style="margin-top:10px">
+                    <div class="alert alert-danger alert-dismissible" role="alert">
+                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                        <span class="sr-only">Error:</span>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <strong>Atencion!</strong> @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            }
+               <div class="col-md-12" style="margin-top:10px">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Menu.Nombre_Menu, htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.EditorFor(model => model.Menu.Nombre_Menu, new { htmlAttributes = new { @class = "form-control", placeholder = "Nombre del menú" } })
+                            @Html.ValidationMessageFor(model => model.Menu.Nombre_Menu, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Menu.Descripcion_Menu, htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.EditorFor(model => model.Menu.Descripcion_Menu, new { htmlAttributes = new { @class = "form-control", placeholder = "Descripción del menú" } })
+                            @Html.ValidationMessageFor(model => model.Menu.Descripcion_Menu, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Menu.Valor_Menu, htmlAttributes: new { @class = "control-label col-md-3"})
+                        <div class="col-md-9">
+                            @Html.EditorFor(model => model.Menu.Valor_Menu, new { htmlAttributes = new { @class = "form-control" } })
+                            @Html.ValidationMessageFor(model => model.Menu.Valor_Menu, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Menu.Cod_TMenu, "Tipo Menu", htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            @Html.DropDownList("Cod_TMenu", null, htmlAttributes: new { @class = "form-control", style= "text-transform:uppercase" })
+                            @Html.ValidationMessageFor(model => model.Menu.Cod_TMenu, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.Menu.Imagen_Menu, "Imagen Menu", htmlAttributes: new { @class = "control-label col-md-3" })
+                        <div class="col-md-9">
+                            <input type="file" name="Imagen_Menu" style="color:white" title="Selecciona la imagen"/>                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        @Html.ActionLink("Volver", "Index", new { }, new { @class = "btn btn-warning" })
+                        <input type="submit" value="Siguiente" class="btn btn-success" onclick="JavascriptFunction()" name="searchQuery" />
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    <div id="divLoading" style="margin: 0px; padding: 0px; position: fixed; right: 0px;
+         top: 0px; width: 100%; height: 100%; background-color: #666666; z-index: 30001;
+         opacity: .8; filter: alpha(opacity=70);display:none">
+        <p style="position: absolute; top: 30%; left: 35%; color: White;">
+            Cargando, Por favor Espere.... <img src="~/Imagenes/loading_transp.gif">
+        </p>
+    </div>
+</div>
+<script type="text/javascript" language="javascript">
+function JavascriptFunction() {
+    var url = '@Url.Action("Create", "Menus")';
+    $("#divLoading").show();
+    $.post(url, null,
+            function (data) {
+                $("#PID")[0].innerHTML = data;
+                $("#divLoading").hide();
+            });
+}
+</script>

@@ -1,0 +1,64 @@
+﻿@model WebRestaurante.Models.Menu
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Menu</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Estado_Menu)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Estado_Menu)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TipoMenu.Nombre_TMenu)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TipoMenu.Nombre_TMenu)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Nombre_Menu)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nombre_Menu)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Descripcion_Menu)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Descripcion_Menu)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Valor_Menu)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Valor_Menu)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            @Html.ActionLink("Volver", "Index", new { }, new { @class = "btn btn-warning" })
+            <input type="submit" value="Borrar" class="btn btn-success" />           
+        </div>
+    }
+</div>

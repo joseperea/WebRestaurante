@@ -1,0 +1,11 @@
+﻿body {
+}
+    /* Remove the navbar's default margin-bottom and rounded borders */ 
+    
+    /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+    
+  .carousel-inner > .item > img,
+  .carousel-inner > .item > a > img {
+      width: 70%;
+      margin: auto;
+  }

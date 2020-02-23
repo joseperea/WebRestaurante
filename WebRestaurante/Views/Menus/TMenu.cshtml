@@ -1,0 +1,182 @@
+﻿@model WebRestaurante.ModelsViews.MenuView
+@{
+    if (ViewBag.Editar == null)
+    {
+        ViewBag.Title = "REGISTRAR TIPO DE MENÚ";
+    }
+    else
+    {
+        ViewBag.Title = "EDITAR TIPO DE MENÚ";
+    }
+}
+<div class="container-fluid" style="color:white">
+    <br />
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="row">
+            
+                <div title="@ViewBag.Title" class="col-sm-12 initialism bs-docs-header text-center " style="font-size:30px; max-width: 100%;height: auto; background-image:url(../../Imagenes/f3df92c17f5c1cc3209e60bc3831f3df.jpg); border-radius:4px;border:2px solid #808080; color:white">
+                    @ViewBag.Title
+                </div>
+           
+            @if (ViewBag.Error != null)
+            {
+                <div class="col-sm-12" style="margin-top:10px">
+                    <div class="alert alert-danger alert-dismissible" role="alert">
+                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                        <span class="sr-only">Error:</span>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <strong>Atencion!</strong> @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            }
+            <div class="col-md-4" style="margin-top:10px">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        @Html.LabelFor(model => model.TipoMenu.Nombre_TMenu, htmlAttributes: new { @class = "control-label col-md-4" })
+                        <div class="col-md-8">
+                            @Html.EditorFor(model => model.TipoMenu.Nombre_TMenu, new { htmlAttributes = new { @class = "form-control", placeholder = "Nombre del tipo de menu" } })
+                            @Html.ValidationMessageFor(model => model.TipoMenu.Nombre_TMenu, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="col-md-offset-2 col-md-10">
+                            @Html.ActionLink("Volver", "Index", new { }, new { @class = "btn btn-warning" })
+                            @if (ViewBag.Editar == null)
+                            {
+                                <input type="submit" value="Crear" class="btn btn-success" onclick="JavascriptFunction()" name="searchQuery"/>
+                            }
+                            else
+                            {
+                                <input type="submit" value="Editar" class="btn btn-primary" onclick="JavascriptFunction()" name="searchQuery"/>
+                                <input id="Name" name="Editar" type="hidden" value="@ViewBag.Editar">
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-8" style="margin-top:10px">
+                <div class="pre-scrollable">
+                    <table class="table table-hover">
+                        <tr style="background-image:url(../../Imagenes/f3df92c17f5c1cc3209e60bc3831f3df.jpg);border-radius:4px;border:2px solid #ffffff">
+                            <th>
+                                @Html.DisplayNameFor(model => model.TipoMenu.Nombre_TMenu)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.TipoMenu.Estado_TMenu)
+                            </th>
+                            <th></th>
+                        </tr>
+                        @foreach (var item in Model.LTipoMenu.ToList())
+                        {
+                            <tr style="color:#d2691e">
+                                <td style="text-transform:uppercase">
+                                    @Html.DisplayFor(modelItem => item.Nombre_TMenu)
+                                </td>
+                                <td>
+                                    @if (item.Estado_TMenu == true)
+                                    {
+                                        <p style="text-transform:uppercase">Disponible</p>
+                                    }
+                                    else
+                                    {
+                                        <p style="text-transform:uppercase">No disponible</p>
+                                    }
+                                </td>
+                                <td class="btn-group" role="group">
+                                    @Html.ActionLink("Editar", "TMenu", new { id = item.Cod_TMenu, E = true }, new { @class = "btn btn-primary", title = "EDITAR TIPO DE MENÚ " + item.Nombre_TMenu.ToUpper(), style = "border:2px solid white" })
+                                    <button type="button" class="btn btn-info" data-toggle="modal" data-target=".@item.Nombre_TMenu@item.Cod_TMenu" style="border:2px solid white" title = "DETALLES DEL MENÚ @item.Nombre_TMenu.ToUpper()" name="modal">Detalles</button>
+                                    <div class="modal fade @item.Nombre_TMenu@item.Cod_TMenu" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" style="color:white">
+                                        <div class="modal-dialog modal-sm" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header" style="background-image:url(../../Imagenes/textura-fondo-azul-1573.jpg)">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                                    <h4 class="modal-title text-center" style="color:white;font-size:30px;text-transform:uppercase">DETALLE DE @Html.DisplayFor(modelItem => item.Nombre_TMenu)</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="row" style="font-size:20px">
+                                                        <div class="col-md-12 text-center" style="background-image:url(../../Imagenes/f3df92c17f5c1cc3209e60bc3831f3df.jpg);border-radius:4px;border:2px solid blue"> 
+                                                            @Html.DisplayNameFor(model => model.TipoMenu.Nombre_TMenu)                                                          
+                                                        </div>
+                                                        <div class="col-md-12 text-primary text-center" style="text-transform:uppercase">
+                                                            @Html.DisplayFor(modelItem => item.Nombre_TMenu)
+                                                        </div>
+                                                        <div class="col-md-12 text-center" style="background-image:url(../../Imagenes/f3df92c17f5c1cc3209e60bc3831f3df.jpg);border-radius:4px;border:2px solid blue">
+                                                            @Html.DisplayNameFor(model => model.TipoMenu.Estado_TMenu)
+                                                        </div>
+                                                        <div class="col-md-12 text-primary text-center">
+                                                            @if (item.Estado_TMenu == true)
+                                                            {
+                                                                <p style="text-transform:uppercase">Disponible</p>
+                                                            }
+                                                            else
+                                                            {
+                                                                <p style="text-transform:uppercase">No disponible</p>
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer" style="background-image:url(../../Imagenes/textura-fondo-azul-1573.jpg)">
+                                                    <div class="row">
+                                                        <div class="col-sm-6">
+                                                            <p class="text-left"><button type="button" class="btn btn-warning" data-dismiss="modal">Volver</button></p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @if (item.Estado_TMenu == true)
+                                    { 
+                                        @Html.ActionLink("Desactivar", "TMenu", new { id = item.Cod_TMenu, D = false }, new { @class = "btn btn-danger", title = "DESACTIVAR TIPO DE MENÚ " + item.Nombre_TMenu.ToUpper(), style = "border:2px solid white" })
+                                    }
+                                    else
+                                    {
+                                        @Html.ActionLink("Activar", "TMenu", new { id = item.Cod_TMenu, D = true }, new { @class = "btn btn-success", title = "ACTIVAR MENÚ " + item.Nombre_TMenu.ToUpper(), style = "border:2px solid white" })
+                                    }
+                                    @if (User.IsInRole("Administrador"))
+                                    {
+                                        @Html.ActionLink("Eliminar", "TMenu", new { id = item.Cod_TMenu }, new { @class = "btn btn-danger", title = "ELIMINAR TIPO DE MENÚ " + item.Nombre_TMenu.ToUpper(), style = "border:2px solid white" })
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </table>
+                </div>
+            </div>
+        </div>
+    }
+@if (ViewBag.Editar == null)
+{
+    <div id="divLoading" style="margin: 0px; padding: 0px; position: fixed; right: 0px;
+         top: 0px; width: 100%; height: 100%; background-color: #666666; z-index: 30001;
+         opacity: .8; filter: alpha(opacity=70);display:none">
+        <p style="position: absolute; top: 30%; left: 35%; color: White;">
+            Registrando, Por favor Espere.... <img src="~/Imagenes/loading_transp.gif">
+        </p>
+    </div>
+}
+else
+{
+    <div id="divLoading" style="margin: 0px; padding: 0px; position: fixed; right: 0px;
+         top: 0px; width: 100%; height: 100%; background-color: #666666; z-index: 30001;
+         opacity: .8; filter: alpha(opacity=70);display:none">
+        <p style="position: absolute; top: 30%; left: 35%; color: White;">
+            Editando, Por favor Espere.... <img src="~/Imagenes/loading_transp.gif">
+        </p>
+    </div>
+}
+</div>
+<script type="text/javascript" language="javascript">
+function JavascriptFunction() {
+    var url = '@Url.Action("TMenu", "Menus")';
+    $("#divLoading").show();
+    $.post(url, null,
+            function (data) {
+                $("#PID")[0].innerHTML = data;
+                $("#divLoading").hide();
+            });
+}
+</script>
