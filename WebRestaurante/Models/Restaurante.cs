@@ -9,7 +9,11 @@ namespace WebRestaurante.Models
     public class Restaurante
     {
        [Key]
-        public int Id_Res { get; set; }
+        public Guid Id_Res { get; set; }
+
+        [Required(ErrorMessage = "Ingrese Nit del restaurante")]
+        [Display(Name = "Nit del restaurante")]
+        public int NitEmpresa { get; set; }
 
         [StringLength(30, MinimumLength = 5,ErrorMessage = "Maximo {1} y Menor a {2} carateres")]
         [Required(ErrorMessage = "Ingrese nombre del restaurante")]
@@ -75,7 +79,7 @@ namespace WebRestaurante.Models
         [DataType(DataType.Time, ErrorMessage = "Por favor ingrese una hora de cierre")]
         public DateTime HoraCierre { get; set; }
 
-        [Display(Name = "Hora de espera del cliente")]
+        [Display(Name = "Tiempo de espera del cliente")]
         [Required(ErrorMessage = "Por favor ingrese la {0}")]
         [DisplayFormat(DataFormatString = "{0:hh:mm:ss}", ApplyFormatInEditMode = true)]
         [DataType(DataType.Time, ErrorMessage = "Por favor ingrese una hora de espera")]

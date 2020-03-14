@@ -3,120 +3,150 @@
     ViewBag.Title = "Configuracion del restaurante";
 }
 <div class="container-fluid" style="color:white">
-    <div class="row">
-        @using (Html.BeginForm())
-        {
-            @Html.AntiForgeryToken()
+    <div>
         <div title="@ViewBag.Title" class="col-sm-12 initialism bs-docs-header text-center" style="font-size:30px; max-width: 100%;height: auto; background-image:url(../../Imagenes/f3df92c17f5c1cc3209e60bc3831f3df.jpg); border-radius:4px;border:2px solid #808080;color:white">
+            <i class="fas fa-cogs"></i>
             CONFIGURACIÓN DEL RESTAURANTE
         </div>
-        <div class="col-sm-12">
-            @if (ViewBag.Error != null)
+
+        @using (Html.BeginForm(null, null, FormMethod.Post, new { enctype = "multipart/form-data", @class = "row" }))
+        {
+            @Html.AntiForgeryToken()
+
+            if (ViewBag.Error != null)
             {
-                <div class="alert alert-danger alert-dismissible" role="alert">
-                    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
-                    <span class="sr-only">Error:</span>
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <strong>Atencion!</strong> @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="col-sm-12">
+                    <div class="alert alert-danger alert-dismissible" role="alert">
+                        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+                        <span class="sr-only">Error:</span>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <strong>Atencion!</strong> @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    </div>
                 </div>
             }
-        </div>
-            <div class="col-sm-12">
+
+            <div class="col-sm-12 col-lg-12" style="margin-top: 20px">
                 <div class="row">
-                    <div class="col-sm-4">
+                    <div class="col-sm-3">
                         <div class="form-horizontal">
-                            <h4 style="color:white"><strong>DATOS PRINCIPALES</strong></h4>
+                            <h4 style="color:white">
+                                <i class="fas fa-utensils"></i>
+                                <strong>DATOS PRINCIPALES</strong>
+                            </h4>
                             <div class="form-group">
-                                <div class="col-md-12">
+                                <div class="col-lg-12">
                                     @Html.LabelFor(model => model.NombreEmpresa, htmlAttributes: new { @class = "control-label", style = "", title = "Nombre del restaurante" })
                                 </div>
-                                <div class="col-md-12">
+                                <div class="input-group col-lg-12">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="inputGroupPrepend">
+                                            <i class="fas fa-building"></i>
+                                        </span>
+                                    </div>
                                     @Html.EditorFor(model => model.NombreEmpresa, new { htmlAttributes = new { @class = "form-control", placeholder = "Nombre del restaurante", title = "Nombre del restaurante" } })
                                     @Html.ValidationMessageFor(model => model.NombreEmpresa, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                             <div class="form-group">
-                                <div class="col-md-12">
+                                <div class="col-lg-12">
+                                    @Html.LabelFor(model => model.NitEmpresa, htmlAttributes: new { @class = "control-label", style = "", title = "Nombre del restaurante" })
+                                </div>
+                                <div class="input-group col-lg-12">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="inputGroupPrepend">
+                                            <i class="fas fa-bookmark"></i>
+                                        </span>
+                                    </div>
+                                    @Html.EditorFor(model => model.NitEmpresa, new { htmlAttributes = new { @class = "form-control", placeholder = "Nombre del restaurante", title = "Nombre del restaurante" } })
+                                    @Html.ValidationMessageFor(model => model.NitEmpresa, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-lg-12">
                                     @Html.LabelFor(model => model.Telefono, htmlAttributes: new { @class = "control-label", style = "" })
                                 </div>
-                                <div class="col-md-12">
+                                <div class="input-group col-lg-12">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="inputGroupPrepend">
+                                            <i class="fas fa-phone-alt"></i>
+                                        </span>
+                                    </div>
                                     @Html.EditorFor(model => model.Telefono, new { htmlAttributes = new { @class = "form-control", placeholder = "Telefono del restaurante" } })
                                     @Html.ValidationMessageFor(model => model.Telefono, "", new { @class = "text-danger" })
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <div class="col-md-12">
+                                <div class="col-lg-12">
                                     @Html.LabelFor(model => model.Direccion, htmlAttributes: new { @class = "control-label", style = "" })
                                 </div>
-                                <div class="col-md-12">
+                                <div class="input-group col-lg-12">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="inputGroupPrepend">
+                                            <i class="fas fa-address-card"></i>
+                                        </span>
+                                    </div>
                                     @Html.EditorFor(model => model.Direccion, new { htmlAttributes = new { @class = "form-control", placeholder = "Dirección del restaurante" } })
                                     @Html.ValidationMessageFor(model => model.Direccion, "", new { @class = "text-danger" })
                                 </div>
                             </div>
-
-                            <div class="form-group">
-                                <div class="col-md-12">
-                                    @Html.LabelFor(model => model.Correo, htmlAttributes: new { @class = "control-label", style = "" })
-                                </div>
-                                <div class="col-md-12">
-                                    @Html.EditorFor(model => model.Correo, new { htmlAttributes = new { @class = "form-control", placeholder = "Correo del restaurante" } })
-                                    @Html.ValidationMessageFor(model => model.Correo, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-md-12">
-                                    @Html.LabelFor(model => model.CorreoContra, htmlAttributes: new { @class = "control-label", style = "" })
-                                </div>
-                                <div class="col-md-12">
-                                    @Html.EditorFor(model => model.CorreoContra, new { htmlAttributes = new { @class = "form-control", placeholder = "Contraseña del restaurante" } })
-                                    @Html.ValidationMessageFor(model => model.CorreoContra, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
                         </div>
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-sm-3">
                         <div class="row">
-                            <div class="col-md-12">
+                            <div class="col-sm-12">
                                 <div class="form-horizontal">
-                                    <h4 style="color:white"><strong>HORARIOS</strong></h4>
+                                    <h4 style="color:white">
+                                        <i class="fas fa-mail-bulk"></i>
+                                        <strong>CORREO</strong>
+                                    </h4>
+
                                     <div class="form-group">
-                                        <div class="col-md-12">
-                                            @Html.LabelFor(model => model.HoraApertura, htmlAttributes: new { @class = "control-label", style = "" })
+                                        <div class="col-lg-12">
+                                            @Html.LabelFor(model => model.Correo, htmlAttributes: new { @class = "control-label", style = "" })
                                         </div>
-                                        <div class="col-md-12">
-                                            @Html.EditorFor(model => model.HoraApertura, new { htmlAttributes = new { @class = "form-control" } })
-                                            @Html.ValidationMessageFor(model => model.HoraApertura, "", new { @class = "text-danger" })
+                                        <div class="input-group col-lg-12">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="inputGroupPrepend">
+                                                    <i class="fas fa-envelope"></i>
+                                                </span>
+                                            </div>
+                                            @Html.EditorFor(model => model.Correo, new { htmlAttributes = new { @class = "form-control", placeholder = "Correo del restaurante" } })
+                                            @Html.ValidationMessageFor(model => model.Correo, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <div class="col-md-12">
-                                            @Html.LabelFor(model => model.HoraCierre, htmlAttributes: new { @class = "control-label", style = "" })
+                                        <div class="col-lg-12">
+                                            @Html.LabelFor(model => model.CorreoContra, htmlAttributes: new { @class = "control-label", style = "" })
                                         </div>
-                                        <div class="col-md-12">
-                                            @Html.EditorFor(model => model.HoraCierre, new { htmlAttributes = new { @class = "form-control" } })
-                                            @Html.ValidationMessageFor(model => model.HoraCierre, "", new { @class = "text-danger" })
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="col-md-12">
-                                            @Html.LabelFor(model => model.TiempoEspera, htmlAttributes: new { @class = "control-label", style = "" })
-                                        </div>
-                                        <div class="col-md-12">
-                                            @Html.EditorFor(model => model.TiempoEspera, new { htmlAttributes = new { @class = "form-control" } })
-                                            @Html.ValidationMessageFor(model => model.TiempoEspera, "", new { @class = "text-danger" })
+                                        <div class="input-group col-lg-12">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="inputGroupPrepend">
+                                                    <i class="fas fa-lock"></i>
+                                                </span>
+                                            </div>
+                                            @Html.EditorFor(model => model.CorreoContra, new { htmlAttributes = new { @class = "form-control", placeholder = "Contraseña del restaurante" } })
+                                            @Html.ValidationMessageFor(model => model.CorreoContra, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-12">
+                            <div class="col-sm-12">
                                 <div class="form-horizontal">
-                                    <h4 style="color:white"><strong>UBICACIÓN</strong></h4>
+                                    <h4 style="color:white">
+                                        <i class="fas fa-globe-americas"></i>
+                                        <strong>UBICACIÓN</strong>
+                                    </h4>
                                     <div class="form-group">
-                                        <div class="col-md-12">
+                                        <div class="col-lg-12">
                                             @Html.LabelFor(model => model.Ubicacion, htmlAttributes: new { @class = "control-label", style = "" })
                                         </div>
-                                        <div class="col-md-12">
+                                        <div class="input-group col-lg-12">
+                                            <div class="input-group-prepend">
+                                                <span class="input-group-text" id="inputGroupPrepend">
+                                                    <i class="fas fa-map-marked-alt"></i>
+                                                </span>
+                                            </div>
                                             @Html.EditorFor(model => model.Ubicacion, new { htmlAttributes = new { @class = "form-control", placeholder = "Url de ubicación" } })
                                             @Html.ValidationMessageFor(model => model.Ubicacion, "", new { @class = "text-danger" })
                                         </div>
@@ -125,34 +155,102 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-4">
+                    <div class="col-sm-3">
                         <div class="form-horizontal">
-                            <h4 style="color:white"><strong>QUIÉNES SOMOS</strong></h4>
+                            <h4 style="color:white">
+                                <i class="fas fa-user-clock"></i>
+                                <strong>HORARIOS</strong>
+                            </h4>
                             <div class="form-group">
-                                <div class="col-md-12">
+                                <div class="col-lg-12">
+                                    @Html.LabelFor(model => model.HoraApertura, htmlAttributes: new { @class = "control-label", style = "" })
+                                </div>
+                                <div class="input-group col-lg-12">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="inputGroupPrepend">
+                                            <i class="far fa-clock"></i>
+                                        </span>
+                                    </div>
+                                    @Html.EditorFor(model => model.HoraApertura, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.HoraApertura, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-lg-12">
+                                    @Html.LabelFor(model => model.HoraCierre, htmlAttributes: new { @class = "control-label", style = "" })
+                                </div>
+                                <div class="input-group col-lg-12">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="inputGroupPrepend">
+                                            <i class="fas fa-clock"></i>
+                                        </span>
+                                    </div>
+                                    @Html.EditorFor(model => model.HoraCierre, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.HoraCierre, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-lg-12">
+                                    @Html.LabelFor(model => model.TiempoEspera, htmlAttributes: new { @class = "control-label", style = "" })
+                                </div>
+                                <div class="input-group col-lg-12">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="inputGroupPrepend">
+                                            <i class="fas fa-clock"></i>
+                                        </span>
+                                    </div>
+                                    @Html.EditorFor(model => model.TiempoEspera, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.TiempoEspera, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-horizontal">
+                            <h4 style="color:white">
+                                <i class="far fa-newspaper"></i>
+                                <strong>QUIÉNES SOMOS</strong>
+                            </h4>
+                            <div class="form-group">
+                                <div class="col-lg-12">
                                     @Html.LabelFor(model => model.MisionEmpresa, htmlAttributes: new { @class = "control-label", style = "" })
                                 </div>
-                                <div class="col-md-12">
+                                <div class="input-group col-lg-12">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="inputGroupPrepend">
+                                            <i class="fas fa-i-cursor"></i>
+                                        </span>
+                                    </div>
                                     @Html.EditorFor(model => model.MisionEmpresa, new { htmlAttributes = new { @class = "form-control", placeholder = "Misión del restaurante" } })
                                     @Html.ValidationMessageFor(model => model.MisionEmpresa, "", new { @class = "text-danger" })
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <div class="col-md-12">
+                                <div class="col-lg-12">
                                     @Html.LabelFor(model => model.VisionEmpresa, htmlAttributes: new { @class = "control-label", style = "" })
                                 </div>
-                                <div class="col-md-12">
+                                <div class="input-group col-lg-12">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="inputGroupPrepend">
+                                            <i class="fas fa-i-cursor"></i>
+                                        </span>
+                                    </div>
                                     @Html.EditorFor(model => model.VisionEmpresa, new { htmlAttributes = new { @class = "form-control", placeholder = "Visión del restaurante" } })
                                     @Html.ValidationMessageFor(model => model.VisionEmpresa, "", new { @class = "text-danger" })
                                 </div>
                             </div>
 
                             <div class="form-group">
-                                <div class="col-md-12">
+                                <div class="col-lg-12">
                                     @Html.LabelFor(model => model.ObjetivosEmpres, htmlAttributes: new { @class = "control-label", style = "" })
                                 </div>
-                                <div class="col-md-12">
+                                <div class="input-group col-lg-12">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="inputGroupPrepend">
+                                            <i class="fas fa-i-cursor"></i>
+                                        </span>
+                                    </div>
                                     @Html.EditorFor(model => model.ObjetivosEmpres, new { htmlAttributes = new { @class = "form-control", placeholder = "Objetivos del restaurante" } })
                                     @Html.ValidationMessageFor(model => model.ObjetivosEmpres, "", new { @class = "text-danger" })
                                 </div>
@@ -162,14 +260,21 @@
                     </div>
                 </div>
             </div>
-            <div class="form-group">
-                <div class="col-md-offset-2 col-md-10">
-                    @Html.ActionLink("Volver", "Index", "Home", new { }, new { @class = "btn btn-warning" })
-                    <input type="submit" value="Guardar" class="btn btn-success" onclick="JavascriptFunction()" />
-                </div>
+
+            <div class="form-group btn-lg btn-block text-center">
+                <button type="submit" value="" class="btn btn-outline-success btn-lg btn-block" onclick="JavascriptFunction()" style="margin: 0 auto">
+                    Siguiente
+                    <i class="fas fa-angle-double-right"></i>
+                </button>
             </div>
         }
     </div>
+    <div class="row">
+        <div id="app">
+            {{message}}
+        </div>
+    </div>
+
     <div id="divLoading" style="margin: 0px; padding: 0px; position: fixed; right: 0px;
          top: 0px; width: 100%; height: 100%; background-color: #666666; z-index: 30001;
          opacity: .8; filter: alpha(opacity=70);display:none">
@@ -178,7 +283,11 @@
         </p>
     </div>
 </div>
-<script type="text/javascript" language="javascript">
+
+@section Scripts
+    {
+
+    <script type="text/javascript" language="javascript">
 function JavascriptFunction() {
     var url = '@Url.Action("Create", "RestaurantesConf")';
     $("#divLoading").show();
@@ -188,4 +297,5 @@ function JavascriptFunction() {
                 $("#divLoading").hide();
             });
 }
-</script>
+    </script>
+}

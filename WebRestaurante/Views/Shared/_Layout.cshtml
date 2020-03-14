@@ -7,7 +7,9 @@
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @RenderSection("HeadIncludes", required: false)
     @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/fontawesome-free-5.12.1-web/css")
     @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/Content/fontawesome-free-5.12.1-web/js")
     <link href="~/Content/Style.css" rel="stylesheet" />
 </head>
 <body>
@@ -36,13 +38,13 @@
                     <li>@Html.ActionLink("Reservar", "Create", "MesasOcupadas")</li>
                     <li>@Html.ActionLink("Menú", "MenuVista", "Menus")</li>
                     @if (User.IsInRole("Empleado") || User.IsInRole("Administrador"))
-                {
+                    {
                         <li>@Html.ActionLink("Permisos", "Index", "Permisos")</li>
                         <li>@Html.ActionLink("Facturación", "Facturacion", "Documentos")</li>
                     }
 
                     @if (User.IsInRole("Empleado") || User.IsInRole("Administrador"))
-                {
+                    {
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">
                                 Gestionar <b class="caret"></b>
@@ -84,6 +86,7 @@
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/vue")
     @RenderSection("scripts", required: false)
     <script src="~/Content/Scripts/bootstrap-hover-dropdown.min.js"></script>
 </body>
